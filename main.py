@@ -27,7 +27,7 @@ def manda_email(): #envia emails à todos os destinatários:
   server.ehlo()
 
   #login:
-  server.login('luisfelipesdn12@gmail.com', 'TOKEN_OR_PASSWORD')
+  server.login('apisbyluisfelipesdn12@gmail.com', 'TOKEN_OR_PASSWORD')
 
   #conteúdo dos emails
   assunto = 'Teste do Web Scrapper WCA 1.0'
@@ -36,7 +36,7 @@ def manda_email(): #envia emails à todos os destinatários:
 
   for email in email_dos_destinatarios:
     server.sendmail(
-      'luisfelipesdn12@gmail.com',
+      'apisbyluisfelipesdn12@gmail.com',
       str(email),
       msg
     )

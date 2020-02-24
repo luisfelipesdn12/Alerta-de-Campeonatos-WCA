@@ -8,7 +8,7 @@ import smtplib #para o envio de e-mails
 from time import sleep
 import datetime
 #dados:
-from dados import competicoes_num, email_dos_destinatarios
+from dados import competicoes_num, email_dos_destinatarios, credenciais
 
 pesquisa = 'São Paulo' #equivalente à pesquisa no site, no caso, usado para delimitar a cidade
 URL = f"https://www.worldcubeassociation.org/competitions?utf8=%E2%9C%93&event_ids%5B%5D=333&event_ids%5B%5D=222&region=Brazil&search={pesquisa.replace(' ', '+')}&state=present&year=all+years&from_date=&to_date=&delegate=&display=list" #fonte dos dados
@@ -27,7 +27,7 @@ def manda_email(): #envia emails à todos os destinatários:
   server.ehlo()
 
   #login:
-  server.login('apisbyluisfelipesdn12@gmail.com', 'TOKEN_OR_PASSWORD')
+  server.login(str(credenciais['email_remetente']), str(credenciais['senha']))
 
   #conteúdo dos emails
   assunto = 'Teste do Web Scrapper WCA 1.0'
@@ -36,7 +36,7 @@ def manda_email(): #envia emails à todos os destinatários:
 
   for email in email_dos_destinatarios:
     server.sendmail(
-      'apisbyluisfelipesdn12@gmail.com',
+      str(credenciais['email_remetente']),
       str(email),
       msg
     )
@@ -58,7 +58,7 @@ while True:
 
   #atualiza os dados no arquivo dados.py:
   file = open('dados.py', 'w')
-  file.writelines(f'competicoes_num = {competicoes_num_atual}\n\nemail_dos_destinatarios = {email_dos_destinatarios}')
+  file.writelines(f'competicoes_num = {competicoes_num_atual}\n\nemail_dos_destinatarios = {email_dos_destinatarios}\n\ncredenciais = {credenciais}')
   file.close()
   
   competicoes_num = competicoes_num_atual #atualiza os dados no script

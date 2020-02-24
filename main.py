@@ -1,13 +1,13 @@
 #IMPORTAÇÕES:
-#pip install necessário
-import requests
-from bs4 import BeautifulSoup
-from unidecode import unidecode
-#bibliotecas nativas
-import smtplib
+#pip install necessário:
+import requests #para Web Scrapping
+from bs4 import BeautifulSoup #para Web Scrapping
+from unidecode import unidecode 
+#bibliotecas nativas:
+import smtplib #para o envio de e-mails
 from time import sleep
 import datetime
-#dados
+#dados:
 from dados import competicoes_num, email_dos_destinatarios
 
 pesquisa = 'São Paulo' #equivalente à pesquisa no site, no caso, usado para delimitar a cidade

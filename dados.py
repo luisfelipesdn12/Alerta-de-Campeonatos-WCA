@@ -8,3 +8,8 @@ email_dos_destinatarios = [
   'muka.game@gmail.com'
   'gustavodagamaaraujo@gmail.com'
   ]
+
+credenciais = {
+  'email_remetente':'SEU E-MAIL AQUI'
+  'senha':'SUA SENHA OU TOKEN AQUI'
+  }

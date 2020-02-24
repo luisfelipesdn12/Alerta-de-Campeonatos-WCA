@@ -19,7 +19,7 @@ Para executar esse projeto, estudei sobre Web Scrapping e envios de e-mails em P
 O funcionamento do código é simples:
 
 - Pega a informação do número de competições futuras na URL com os filtros pré definidos;
--  Pega informações de um arquivo `dados.py` em que são armazenados os dados da última verificação e os e-mails dos destinatários;
+-  Pega informações de um arquivo `dados.py` em que são armazenados os dados da última verificação, os e-mails dos destinatários e as credenciais para o envio de e-mails;
 - Compara os dados e, se o número de competições futuras estiver aumentado: manda um e-mail notificando;
 - Atualiza os dados no arquivo `dados.py`;
 - Aguarda um tempo e repete o processo.

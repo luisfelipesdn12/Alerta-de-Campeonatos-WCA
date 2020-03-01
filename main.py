@@ -19,7 +19,7 @@ def retornaWorksheets():
     "https://www.googleapis.com/auth/spreadsheets", "https://www.googleapis.com/auth/drive.file", "https://www.googleapis.com/auth/drive"
     ]
 
-  creds = ServiceAccountCredentials.from_json_keyfile_name('SEU_ARQUIVO.json', scope) #capitura credenciais de um arquivo .json
+  creds = ServiceAccountCredentials.from_json_keyfile_name('credencial_google.json', scope) #capitura credenciais de um arquivo .json
 
   client = gspread.authorize(creds) #usa essas credenciais
 
@@ -90,7 +90,7 @@ Há uma alteração de {dest["N de competições"]} competições futuras, para 
 ##Informações Gerais:
 
 Competições futuras: {dest["N de competições"]}
-Data de verificação: {dest["Data da verificação"]}
+Data de verificação: {dest["Data de verificação"]}
 
 Competições futuras: {competicoes_num_atual}
 Data de verificação: {data_de_verificacao_atual}
@@ -123,13 +123,16 @@ def main():
     data_de_verificacao_atual = datetime.now() #datetime da verificação
 
     #se houver alteração desde a última verificação, manda um email
-    if competicoes_num_atual != dest['N de competições']:
-      manda_email(dest, competicoes_num_atual, data_de_verificacao_atual)
+    if dest['N de competições'] != '' and competicoes_num_atual != dest['N de competições']:
+      try: manda_email(dest, competicoes_num_atual, data_de_verificacao_atual)
+      except: print(f'\n ERRO AO ENVIO DE EMAIL: {dest}\n')
 
     #atualiza dados na planilha:
-    retornaWorksheets()['dest_sheet'].update_acell(f'D{c+1}', f'{competicoes_num_atual}') #n de comps
+    retornaWorksheets()['dest_sheet'].update_acell(f'E{c+1}', f'{competicoes_num_atual}') #n de comps
 
-    retornaWorksheets()['dest_sheet'].update_acell(f'E{c+1}', f'{data_de_verificacao_atual}') #data de verificação
+    retornaWorksheets()['dest_sheet'].update_acell(f'F{c+1}', f'{data_de_verificacao_atual}') #data de verificação
+
+    print(f'\n VERIFICAÇÃO FEITA: {dest} \n')
 
     c += 1
 

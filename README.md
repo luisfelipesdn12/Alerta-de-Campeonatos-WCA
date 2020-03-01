@@ -13,10 +13,16 @@ Existem campeonatos oficiais por todo o Mundo, organizados pela Organização Mu
 Nós participamos deles, e é bem comum consultarmos o [site da WCA](https://www.worldcubeassociation.org/competitions) em buscas de competições por perto. Às vezes, entrávamos algumas vezes na semana, e nada; às vezes, esquecíamos de entrar e perdíamos um campeonato tão aguardado. 
 Para resolver esse problema, tive a ideia de fazer um script que verificasse o site periodicamente e nos notificasse quanto identificasse uma competição por perto que poderia ser de nosso interesse.  
 
+## Uso:
+
+Se inscreva colocando seu nome, email e cidade a ser notificado preenchendo o formulário abaixo:
+
+[**Enviar formulário**](https://forms.gle/K6vW3YVAYp4d6nb97)
+
 ## Execução:
 Para executar esse projeto, estudei sobre Web Scrapping e envios de e-mails em Python. Utilizei bibliotecas como `requests` e `BeautifulSoup` para Web Scrapping e `smtplib` para o envio de e-mails.
 
-O funcionamento do código é simples:
+O funcionamento do código é o segunte:
 
 - Conecta à uma planilha no Google Sheets, por meio de um `ARQUIVO.json`;
 - Coleta os dados de `Destinatarios` atualizados;
@@ -26,4 +32,6 @@ O funcionamento do código é simples:
 - Verifica para cada destinatario, se houver alterações em `N de competições` desde a última verificação: manda um email.
 - Atualiza os dados na planilha.
 - Aguarda um tempo e repete o processo.
+
+A planilha está conectada à um formulário do Google, o que possibilita inscrições automáticas.
 

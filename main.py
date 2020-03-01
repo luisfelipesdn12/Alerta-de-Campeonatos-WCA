@@ -3,23 +3,70 @@
 import requests #para Web Scrapping
 from bs4 import BeautifulSoup #para Web Scrapping
 from unidecode import unidecode 
+import gspread #manipula google sheets
+from oauth2client.service_account import ServiceAccountCredentials #autentica o acesso
 #bibliotecas nativas:
 import smtplib #para o envio de e-mails
 from time import sleep
-import datetime
-#dados:
-from dados import competicoes_num, email_dos_destinatarios, credenciais
+from datetime import datetime, date
 
-pesquisa = 'São Paulo' #equivalente à pesquisa no site, no caso, usado para delimitar a cidade
-URL = f"https://www.worldcubeassociation.org/competitions?utf8=%E2%9C%93&event_ids%5B%5D=333&event_ids%5B%5D=222&region=Brazil&search={pesquisa.replace(' ', '+')}&state=present&year=all+years&from_date=&to_date=&delegate=&display=list" #fonte dos dados
+#FUNCTIONS:
+def retornaWorksheets():
+  scope = [
+    "https://www.googleapis.com/auth/spreadsheets", "https://www.googleapis.com/auth/drive.file", "https://www.googleapis.com/auth/drive"
+    ]
 
-#CONFIGURAÇõES:
-headers = {"User-Agent" : 'YOUR_USER_AGENT'}
-page = requests.get(URL, headers = headers)
-soup = BeautifulSoup(page.content,  'html.parser')
+  creds = ServiceAccountCredentials.from_json_keyfile_name('SEU_ARQUIVO.json', scope) #capitura credenciais de um arquivo .json
 
-#FUNÇÔES:
-def manda_email(): #envia emails à todos os destinatários:
+  client = gspread.authorize(creds) #usa essas credenciais
+
+  sheet = client.open('Dados') #abre o arquivo
+
+  worksheets = dict()
+  worksheets['dest_sheet'] = sheet.worksheet('Destinatarios')
+  worksheets['cred_sheet'] = sheet.worksheet('Credenciais')
+
+  return(worksheets) #retorna um dicionário com as duas subplanilhas
+
+def retornaDados(): #retorn credenciais e lista de dests
+  #usa o dicionário criado por retornaWorksheets()
+  dest_sheet = retornaWorksheets()['dest_sheet'] 
+  cred_sheet = retornaWorksheets()['cred_sheet']
+
+  dados = dict()
+
+  dados['list_of_dicts_dest_sheet'] = dest_sheet.get_all_records() #captura uma lista com dicionarios contendo infoemações de cada remetente
+
+  list_of_dicts_cred_sheet = cred_sheet.get_all_records() #capitura as credenciais para envio de emails
+
+  dados['credentials'] = {
+    'email_remetente':f'{list_of_dicts_cred_sheet[0]["Email"]}',
+    'senha':f'{list_of_dicts_cred_sheet[0]["Senha"]}'
+    }
+
+  return(dados) #retorna um dicionario com as duas infoemações
+
+def retornaCompsFuturas(cidade):
+  URL = f"https://www.worldcubeassociation.org/competitions?utf8=%E2%9C%93&event_ids%5B%5D=333&event_ids%5B%5D=222&region=Brazil&search={cidade.replace(' ', '+')}&state=present&year=all+years&from_date=&to_date=&delegate=&display=list" #fonte dos dados
+
+  #CONFIGURAÇõES:
+  headers = {"User-Agent" : 'YOUR_USER_AGENT'}
+  page = requests.get(URL, headers = headers)
+  soup = BeautifulSoup(page.content,  'html.parser')
+
+  scrap_puro = soup.find(class_="list-group-item") #consulta número atual de competições
+
+  #captura o número, o isolando do resto
+  if scrap_puro != None:
+    numero_isolado = int((str(scrap_puro.get_text()))[-2])
+  #retorna 0 em vez de None
+  else: numero_isolado = 0
+
+  return(numero_isolado)
+
+def manda_email(dest, competicoes_num_atual, data_de_verificacao_atual):
+  credenciais_email = retornaDados()['credentials'] #pega as credenciais para o envio de emails
+
   #configurações:
   server = smtplib.SMTP('smtp.gmail.com', 587)
   server.ehlo()
@@ -27,41 +74,60 @@ def manda_email(): #envia emails à todos os destinatários:
   server.ehlo()
 
   #login:
-  server.login(str(credenciais['email_remetente']), str(credenciais['senha']))
+  server.login(str(credenciais_email['email_remetente']), str(credenciais_email['senha']))
 
   #conteúdo dos emails
-  assunto = 'Teste do Web Scrapper WCA 1.0'
-  corpo = f'O numero de campeonatos no Brasil,em {pesquisa} e em que ha as modalidades 2x2 e 3x3 -> {competicoes_num_atual} \nVerificacao feita em: {str(datetime.datetime.now())} \n\nVeja aqui: {URL}'
+  assunto = f'{dest["Nome"]}! Temos uma atualização! - {date.today()}'
+  corpo = f'''
+Olá {dest["Nome"]}!
+Este email é enviado automaticamente e tem informações sobre competições nas modalidades 2x2 e 3x3 na cidade {dest["Cidade"]}.
+
+Há uma alteração de {dest["N de competições"]} competições futuras, para {competicoes_num_atual}.
+
+##Informações Gerais:
+
+Competições futuras: {dest["N de competições"]}
+Data de verificação: {dest["Data da verificação"]}
+
+Competições futuras: {competicoes_num_atual}
+Data de verificação: {data_de_verificacao_atual}
+
+##Veja aqui: https://www.worldcubeassociation.org/competitions?utf8=%E2%9C%93&event_ids%5B%5D=333&event_ids%5B%5D=222&region=Brazil&search={dest["Cidade"].replace(' ', '+')}&state=present&year=all+years&from_date=&to_date=&delegate=&display=list
+  '''
   msg = unidecode(f'Subject: {assunto}\n\n{corpo}') #(unidecode para evitar erros pelo uso de acentos)
 
-  for email in email_dos_destinatarios:
-    server.sendmail(
-      str(credenciais['email_remetente']),
-      str(email),
-      msg
-    )
-    print(f"O email foi mandado para {email}! \n {str(datetime.datetime.now())} \n---\n")
+  server.sendmail(
+    str(credenciais_email['email_remetente']),
+    str(dest['Email']),
+    msg
+  )
+  print(f'O email foi mandado para {dest["Email"]}! {str(datetime.now())} \n---\n')
 
-  server.quit()
+#MAIN FUNCTION:
+def main():
+  lista_de_dests = retornaDados()['list_of_dicts_dest_sheet'] #pega uma lista com dicionarios contendo infoemações de cada remetente
 
-#LOOPING DE VERIFICAÇÕES:
+  c = 1 #variavel de controle das repetições abaixo, para saber em qual destinatario fazer alterações na planilha
+
+  #verifica para cada destinatario
+  for dest in lista_de_dests:
+    competicoes_num_atual = retornaCompsFuturas(cidade = dest['Cidade']) #web scrap das competiÇões futuras
+
+    data_de_verificacao_atual = datetime.now() #datetime da verificação
+
+    #se houver alteração desde a última verificação, manda um email
+    if competicoes_num_atual != dest['N de competições']:
+      manda_email(dest, competicoes_num_atual, data_de_verificacao_atual)
+
+    #atualiza dados na planilha:
+    retornaWorksheets()['dest_sheet'].update_acell(f'D{c+1}', f'{competicoes_num_atual}') #n de comps
+
+    retornaWorksheets()['dest_sheet'].update_acell(f'E{c+1}', f'{data_de_verificacao_atual}') #data de verificação
+
+    c += 1
+
+
+#MAIN LOOP:
 while True:
-  competicoes_num_atual = int((str(soup.find(class_="list-group-item").get_text()))[-2]) #consulta número atual de competições
-
-  #se o número coletado diferir do último dado coletado E o atual for maior; ou seja: se tiver aumentado o número de competições:
-  if competicoes_num_atual != competicoes_num and competicoes_num_atual > competicoes_num:
-    print(f'\n---\nVerificação feita. Emails enviados. \n\nDado antigo: {competicoes_num} competições futuras; \nDado atual: {competicoes_num_atual} competições futuras. \n\n{str(datetime.datetime.now())} \n---\n') #imprime na tela os dados
-    manda_email() #aciona a função de mandar emails
-
-  #caso contrário só imprime os dados:
-  else: print(f'\n---\nVerificação feita. Emails não enviados. \n\nDado antigo: {competicoes_num} competições futuras; \nDado atual: {competicoes_num_atual} competições futuras. \n\n{str(datetime.datetime.now())} \n---\n')
-
-  #atualiza os dados no arquivo dados.py:
-  file = open('dados.py', 'w')
-  file.writelines(f'competicoes_num = {competicoes_num_atual}\n\nemail_dos_destinatarios = {email_dos_destinatarios}\n\ncredenciais = {credenciais}')
-  file.close()
-  
-  competicoes_num = competicoes_num_atual #atualiza os dados no script
-
-  sleep(60) #tempo (segundos) entre uma verificação e outra
-
+  main()
+  sleep(60*60*12) #12 horas

@@ -7,6 +7,9 @@ import gspread #manipula google sheets
 from oauth2client.service_account import ServiceAccountCredentials #autentica o acesso
 #bibliotecas nativas:
 import smtplib #para o envio de e-mails
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+#as duas acima são para mandar emails em UTF-8
 from time import sleep
 from datetime import datetime, date
 
@@ -94,7 +97,11 @@ Data de verificação: {data_de_verificacao_atual}
 
 ##Veja aqui: https://www.worldcubeassociation.org/competitions?utf8=%E2%9C%93&event_ids%5B%5D=333&event_ids%5B%5D=222&region=Brazil&search={dest["Cidade"].replace(' ', '+')}&state=present&year=all+years&from_date=&to_date=&delegate=&display=list
   '''
-  msg = unidecode(f'Subject: {assunto}\n\n{corpo}') #(unidecode para evitar erros pelo uso de acentos)
+
+  msg = MIMEMultipart("alternative")
+  msg["Subject"] = f"{assunto}"
+  msg.attach( MIMEText(f"{corpo}", "plain", "utf-8" ) )
+  msg = msg.as_string().encode('ascii')
 
   server.sendmail(
     str(credenciais_email['email_remetente']),

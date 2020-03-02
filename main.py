@@ -19,7 +19,7 @@ def retornaWorksheets():
     "https://www.googleapis.com/auth/spreadsheets", "https://www.googleapis.com/auth/drive.file", "https://www.googleapis.com/auth/drive"
     ]
 
-  creds = ServiceAccountCredentials.from_json_keyfile_name('SEU_ARQUIVO.json', scope) #capitura credenciais de um arquivo .json
+  creds = ServiceAccountCredentials.from_json_keyfile_name('credencial_google.json', scope) #capitura credenciais de um arquivo .json
 
   client = gspread.authorize(creds) #usa essas credenciais
 
@@ -31,10 +31,12 @@ def retornaWorksheets():
 
   return(worksheets) #retorna um dicionário com as duas subplanilhas
 
+worksheets = retornaWorksheets()
+
 def retornaDados(): #retorn credenciais e lista de dests
   #usa o dicionário criado por retornaWorksheets()
-  dest_sheet = retornaWorksheets()['dest_sheet'] 
-  cred_sheet = retornaWorksheets()['cred_sheet']
+  dest_sheet = worksheets['dest_sheet'] 
+  cred_sheet = worksheets['cred_sheet']
 
   dados = dict()
 
@@ -48,6 +50,8 @@ def retornaDados(): #retorn credenciais e lista de dests
     }
 
   return(dados) #retorna um dicionario com as duas infoemações
+
+dados = retornaDados()
 
 def retornaCompsFuturas(cidade):
   URL = f"https://www.worldcubeassociation.org/competitions?utf8=%E2%9C%93&event_ids%5B%5D=333&event_ids%5B%5D=222&region=Brazil&search={cidade.replace(' ', '+')}&state=present&year=all+years&from_date=&to_date=&delegate=&display=list" #fonte dos dados
@@ -68,7 +72,7 @@ def retornaCompsFuturas(cidade):
   return(numero_isolado)
 
 def manda_email(dest, competicoes_num_atual, data_de_verificacao_atual):
-  credenciais_email = retornaDados()['credentials'] #pega as credenciais para o envio de emails
+  credenciais_email = dados['credentials'] #pega as credenciais para o envio de emails
 
   #configurações:
   server = smtplib.SMTP('smtp.gmail.com', 587)
@@ -112,7 +116,9 @@ Data de verificação: {data_de_verificacao_atual}
 
 #MAIN FUNCTION:
 def main():
-  lista_de_dests = retornaDados()['list_of_dicts_dest_sheet'] #pega uma lista com dicionarios contendo infoemações de cada remetente
+  lista_de_dests = dados['list_of_dicts_dest_sheet'] #pega uma lista com dicionarios contendo infoemações de cada remetente
+
+  print("\nDADOS CAPTURADOS\n")
 
   c = 1 #variavel de controle das repetições abaixo, para saber em qual destinatario fazer alterações na planilha
 
@@ -138,6 +144,4 @@ def main():
 
 
 #MAIN LOOP:
-while True:
-  main()
-  sleep(60*60*12) #12 horas
+main()

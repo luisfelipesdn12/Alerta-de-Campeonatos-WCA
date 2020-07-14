@@ -19,7 +19,7 @@ def retornaWorksheets():
     "https://www.googleapis.com/auth/spreadsheets", "https://www.googleapis.com/auth/drive.file", "https://www.googleapis.com/auth/drive"
     ]
 
-  creds = ServiceAccountCredentials.from_json_keyfile_name('credencial_google.json', scope) #capitura credenciais de um arquivo .json
+  creds = ServiceAccountCredentials.from_json_keyfile_name('alerta-de-campeonatos-wca-3cc3e6e36451.json', scope) #capitura credenciais de um arquivo .json
 
   client = gspread.authorize(creds) #usa essas credenciais
 

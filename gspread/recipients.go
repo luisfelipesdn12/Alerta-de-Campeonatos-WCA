@@ -1,6 +1,7 @@
 package gspread
 
 import (
+	"log"
 	"strconv"
 
 	"gopkg.in/Iwark/spreadsheet.v2"
@@ -35,6 +36,7 @@ func GetRecipientsData() ([]RecipientStruct, error) {
 	// the `client_secret.json` file in the project
 	// root. If an error happen, the function returns
 	// a empty slice of `RecipientStruct` and the error
+	log.Println("Connecting with Google SpreadSheets API")
 	service, err := spreadsheet.NewService()
 	if err != nil {
 		return recipients, err
@@ -43,6 +45,7 @@ func GetRecipientsData() ([]RecipientStruct, error) {
 	// Fetch the spreadsheet with the `spreadsheetID` value.
 	// If an error happen, the function returns a empty
 	// slice of `RecipientStruct` and the error
+	log.Println("Fetching the spreadsheet in account")
 	spreadsheet, err := service.FetchSpreadsheet(spreadsheetID)
 	if err != nil {
 		return recipients, err
@@ -52,6 +55,7 @@ func GetRecipientsData() ([]RecipientStruct, error) {
 	// `spreadsheet` value. If an error happen, the
 	// function returns a empty slice of `RecipientStruct`
 	// and the error
+	log.Println(`Fetching the specific sheet "Recipients"`)
 	recipientsSheet, err := spreadsheet.SheetByTitle("Recipients")
 	if err != nil {
 		return recipients, err
@@ -97,6 +101,7 @@ func (recipient RecipientStruct) UpdateUpcomingCompetitions() error {
 		string(recipient.CurrentVerificationDate),
 	)
 
+	log.Printf("Updating and Syncronyzing the upcoming competitions from %v\n", recipient.Name.Value)
 	err := recipient.Sheet.Synchronize()
 	if err != nil {
 		return err

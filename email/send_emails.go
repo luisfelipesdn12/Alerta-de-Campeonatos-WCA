@@ -2,6 +2,7 @@ package email
 
 import (
 	"fmt"
+	"log"
 	"time"
 
 	"../gspread"
@@ -63,6 +64,7 @@ func SendEmail(r gspread.RecipientStruct, credentials gspread.CredentialStruct) 
 	)
 
 	// Send the email.
+	log.Printf("Sending a email to %v\n", r.Email.Value)
 	err := d.DialAndSend(m)
 	checkError(err)
 }

@@ -38,7 +38,7 @@ func GetRecipientsData(spreadData spreadsheet.Spreadsheet) ([]RecipientStruct, e
 	// function returns a empty slice of `RecipientStruct`
 	// and the error
 	log.Println(`Fetching the specific sheet "Recipients"`)
-	recipientsSheet, err := spreadData.SheetByTitle("Recipients")
+	recipientsSheet, err := spreadData.SheetByTitle("Betas")
 	if err != nil {
 		return recipients, err
 	}

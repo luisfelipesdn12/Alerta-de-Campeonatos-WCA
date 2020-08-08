@@ -29,35 +29,16 @@ type RecipientStruct struct {
 // GetRecipientsData fetch the data stored in the
 // spreadsheet, tranform it in a slice of `RecipientStruct`
 // as described above
-func GetRecipientsData() ([]RecipientStruct, error) {
+func GetRecipientsData(spreadData spreadsheet.Spreadsheet) ([]RecipientStruct, error) {
 
 	recipients := []RecipientStruct{}
 
-	// Make the connection to the gspread API using
-	// the `client_secret.json` file in the project
-	// root. If an error happen, the function returns
-	// a empty slice of `RecipientStruct` and the error
-	log.Println("Connecting with Google SpreadSheets API")
-	service, err := spreadsheet.NewService()
-	if err != nil {
-		return recipients, err
-	}
-
-	// Fetch the spreadsheet with the `spreadsheetID` value.
-	// If an error happen, the function returns a empty
-	// slice of `RecipientStruct` and the error
-	log.Println("Fetching the spreadsheet in account")
-	spreadsheet, err := service.FetchSpreadsheet(spreadsheetID)
-	if err != nil {
-		return recipients, err
-	}
-
 	// Fetch the specific recipients sheet with the
-	// `spreadsheet` value. If an error happen, the
+	// `spreadData` value. If an error happen, the
 	// function returns a empty slice of `RecipientStruct`
 	// and the error
 	log.Println(`Fetching the specific sheet "Recipients"`)
-	recipientsSheet, err := spreadsheet.SheetByTitle("Recipients")
+	recipientsSheet, err := spreadData.SheetByTitle("Recipients")
 	if err != nil {
 		return recipients, err
 	}

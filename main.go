@@ -47,15 +47,21 @@ func main() {
 
 	defer logFile.Close()
 
+	// Using the `gspred` local package to do the
+	// connection with the Google SpreadSheet API,
+	// fetch the specific spreadsheet of the project
+	// and return the spreadsheet data.
+	spreadData, err := gspread.GetSpreadData()
+
 	// Using the `gspred` local package to get the data
 	// of each recipient from Google SpreadSheets.
-	recipients, err := gspread.GetRecipientsData()
+	recipients, err := gspread.GetRecipientsData(spreadData)
 	checkError(err)
 
 	// Using the `gspred` local package to get the
 	// credentials data from Google SpreadSheets. It
 	// will be used to send the emails below.
-	credentials, err := gspread.GetCredentialsData()
+	credentials, err := gspread.GetCredentialsData(spreadData)
 	checkError(err)
 
 	// For each recipient object, get the current number

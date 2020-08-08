@@ -1,39 +1,64 @@
 # Alerta-de-Campeonatos-WCA
 Um script que manda um e-mail quando há um campeonato novo na WCA.
+A script witch send an e-mail when there's a new WCA competition. 
 
-![Imgur](https://i.imgur.com/pGXmXRL.png)
+![Header](https://raw.githubusercontent.com/luisfelipesdn12/Alerta-de-Campeonatos-WCA/golang/images/Email%20Header%20English.png)
 
 ## Ideia:
->"A World Cube Association regula competicões de quebra-cabeças mecânicos que são operados girando-se os lados, comumente chamados de "twisty puzzles". O mais famoso deles é o "Rubik's Cube" (Cubo Mágico ou Cubo de Rubik), inventado pelo professor Rubik, da Hungria. Alguns destes quebra-cabeças são eventos oficiais da WCA.
-À medida que a WCA evoluiu ao longo da última década, mais de 100.000 pessoas já participaram de nossas competições."
->- Fonte: "[Quem somos nós](https://www.worldcubeassociation.org/about)"  acessado em 23 de Fevereiro de 2020.
+>"The World Cube Association governs competitions for mechanical puzzles that are operated by twisting groups of pieces, commonly known as 'twisty puzzles'. The most famous of these puzzles is the Rubik's Cube, invented by professor Rubik from Hungary. A selection of these puzzles are chosen as official events of the WCA.
+As the WCA has evolved over the past decade, over 100,000 people have competed in our competitions."
+>- Source: "[Who we are](https://www.worldcubeassociation.org/about)"  access in 2020 August, 08.
 
-Eu e meus amigos temos como *hobbie* o *speedcubing*, simplificadamente: montar cubo-mágico e outros quebra-cabeças no menor tempo possível.  
-Existem campeonatos oficiais por todo o Mundo, organizados pela Organização Mundial de Cubo Mágico (WCA), supracitada.
+Me and my friends have the *speedcubing* as a hobbie, simplified: solve rubik's cube and other puzzles in the lowest time as possible.
+There's official competitions all over the world, realized by the World Cube Association (WCA), as above-mentioned.
 ><img src="https://www.cps.sp.gov.br/wp-content/uploads/sites/1/2019/08/Etec-Jacare%C3%AD-4%C2%BA-campeonato-mundial-do-cubo.jpg" width="600">
 
-Nós participamos deles, e é bem comum consultarmos o [site da WCA](https://www.worldcubeassociation.org/competitions) em buscas de competições por perto. Às vezes, entrávamos algumas vezes na semana, e nada; às vezes, esquecíamos de entrar e perdíamos um campeonato tão aguardado. 
-Para resolver esse problema, tive a ideia de fazer um script que verificasse o site periodicamente e nos notificasse quanto identificasse uma competição por perto que poderia ser de nosso interesse.  
+We participate in them, and is very common we check the [WCA's site](https://www.worldcubeassociation.org/competitions) searching for nearly competitions. Sometimes, we check few times a week, and nothing; sometimes, we forgot to check and lost a long-awaited competition. 
+To solve this issue, I had the idea of making a script that would check the site periodically and notify us when it identified a competition nearby that could be of interest to us.
 
-## Uso:
+## Usage:
 
-Se inscreva colocando seu nome, email e cidade a ser notificado preenchendo o formulário abaixo:
+Subscribe, inserting your name, email, language and the city you want to be notified by filling the form bellow:
 
-[**Enviar formulário**](https://forms.gle/K6vW3YVAYp4d6nb97)
+[**Subscribe**](https://forms.gle/K6vW3YVAYp4d6nb97)
 
-## Execução:
-Para executar esse projeto, estudei sobre Web Scrapping e envios de e-mails em Python. Utilizei bibliotecas como `requests` e `BeautifulSoup` para Web Scrapping e `smtplib` para o envio de e-mails.
+## Execution:
+To execute this project, I've initially used Python with the libraries `requests` and `BeautifulSoup` for web scrapping in the site itself and `smtplib` for sending emails. 
+But I made a migration to Golang, with the WCA's API instead of the front-end site. I studied modulation of code in local packages, the usage of libraries as `spreadsheet` for connect with Google Sheets API and the `gomail` to send the notifications.
 
-O funcionamento do código é o segunte:
+The code works as follows:
 
-- Conecta à uma planilha no Google Sheets, por meio de um `ARQUIVO.json`;
-- Coleta os dados de `Destinatarios` atualizados;
-><img src="https://raw.githubusercontent.com/luisfelipesdn12-email/Alerta-de-Campeonatos-WCA/master/demo_images/Sheet%20Dests%20Print.JPG" width="700">
-- Coleta os dados de `Credenciais` atualizados, onde são armazenados as credenciais para o envio de emails;
-><img src="https://raw.githubusercontent.com/luisfelipesdn12-email/Alerta-de-Campeonatos-WCA/master/demo_images/Sheet%20Creds%20Print.JPG" width="700">
-- Verifica para cada destinatario, se houver alterações em `N de competições` desde a última verificação: manda um email.
-- Atualiza os dados na planilha.
-- Aguarda um tempo e repete o processo.
+- Fetch the data from a spreadsheet in my Google account (recipients data and credentials to emails sending);
+- Verify the upcoming competitions of each recipient city;
+- Update it in the spreadsheet;
+- Compare the current verification with the last one;
+- Send an email if this numbers are different;
+> All this process is logged in `main.log` file.
 
-A planilha está conectada à um formulário do Google, o que possibilita inscrições automáticas.
+In my Google account, the spreadsheet is organized in this format:
 
+### Sheet 1 ("Recipients"):
+> The data provided by the form and the past verifications.
+
+|  Form was filled in  | Name |   Email    |    City    | Language | Upcoming Competitions |  Last Verification  |
+| -------------------- | ---- | ---------- | ---------- | -------- | --------------------- | ------------------- |
+| 00/00/0000 00:00:00  | anne | anne@e.com | New Jersey | English  | 7                     | 0000-00-00 00:00:00 |
+| ...                  | ...  | ...        | ...        | ...      | ...                   | ...                 |
+
+### Sheet 2 ("Betas"):
+> My personal friends who agreed to be beta testers. When the code is in development it runs here first.
+
+|          -           | Name |   Email    |    City    |  Language  | Upcoming Competitions |  Last Verification  |
+| -------------------- | ---- | ---------- | ---------- | ---------- | --------------------- | ------------------- |
+|          -           | tagu | tagu@u.com | São Paulo  | Português  | 2                     | 0000-00-00 00:00:00 |
+| ...                  | ...  | ...        | ...        | ...        | ...                   | ...                 |
+
+### Sheet 3 ("Credentials"):
+> The email and password of the email sender account.
+
+|        Email        |  Password  |
+| ------------------- | ---------- |
+| myaccount@gmail.com | my9a55w0rd |
+
+## To do:
+- [ ] Add an runtime `map` with `{city : upcoming copetitions}` and if the city were already verificated in other recipient, do not verificate again and catch this data from the `map`.

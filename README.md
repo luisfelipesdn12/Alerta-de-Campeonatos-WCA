@@ -60,3 +60,5 @@ In my Google account, the spreadsheet is organized in this format:
 | ------------------- | ---------- |
 | myaccount@gmail.com | my9a55w0rd |
 
+## To do:
+- [ ] Add an runtime `map` with `{city : upcoming copetitions}` and if the city were already verificated in other recipient, do not verificate again and catch this data from the `map`.

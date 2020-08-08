@@ -14,7 +14,7 @@ Existem campeonatos oficiais por todo o mundo, organizados pela Organização Mu
 ><img src="https://www.cps.sp.gov.br/wp-content/uploads/sites/1/2019/08/Etec-Jacare%C3%AD-4%C2%BA-campeonato-mundial-do-cubo.jpg" width="600">
 
 Nós participamos deles, e é bem comum consultarmos o [site da WCA](https://www.worldcubeassociation.org/competitions) em buscas de competições por perto. Às vezes, entrávamos algumas vezes na semana, e nada; às vezes, esquecíamos de entrar e perdíamos um campeonato tão aguardado. 
-Para resolver esse problema, tive a ideia de fazer um script que verificasse o site periodicamente e nos notificasse quanto identificasse uma competição por perto que poderia ser de nosso interesse.
+Para resolver este problema, tive a ideia de fazer um script que verificasse o site periodicamente e nos notificasse quanto identificasse uma competição por perto que poderia ser de nosso interesse.
 
 ## Uso:
 Se inscreva, inserindo seu nome, e-mail, idioma e a cidade que deseja ser notificado preenchendo o seguinte formulário:
@@ -31,10 +31,10 @@ O código funciona assim:
 - Verifica as competições futuras na cidade de cada destinatário;
 - Atualiza na planilha;
 - Compara a verificação atual com a última;
-- Manda um e-mail caso esses números sejam diferentes;
-> O log de todo esse processo é armazenado num arquivo `main.log`.
+- Manda um e-mail caso estes números sejam diferentes;
+> O log de todo este processo é armazenado num arquivo `main.log`.
 
-Na minha conta do Google, a planilha está organizada nesse formato (com os nomes em inglês):
+Na minha conta do Google, a planilha está organizada neste formato (com os nomes em inglês):
 
 ### Planilha 1 ("Destinatários"):
 > Os dados providos pelo formulário e as verificações anteriores.
@@ -59,3 +59,5 @@ Na minha conta do Google, a planilha está organizada nesse formato (com os nome
 | -------------------- | ---------- |
 | minhaconta@gmail.com | minh453nh4 |
 
+## *To do*:
+- [ ] Adicionar um `map` em tempo de execução com `{cidade : competições futuras}` e se a cidade já foi verificada em outro destinatário, não verificar de novo e pegar este dado do `map`.

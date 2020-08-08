@@ -4,7 +4,7 @@ A script witch send an e-mail when there's a new WCA competition.
 
 ![Header](https://raw.githubusercontent.com/luisfelipesdn12/Alerta-de-Campeonatos-WCA/golang/images/Email%20Header%20Portuguese.png)
 
-## Idea:
+## Idéia:
 >"A World Cube Association regula competicões de quebra-cabeças mecânicos que são operados girando-se os lados, comumente chamados de "twisty puzzles". O mais famoso deles é o "Rubik's Cube" (Cubo Mágico ou Cubo de Rubik), inventado pelo professor Rubik, da Hungria. Alguns destes quebra-cabeças são eventos oficiais da WCA.
 À medida que a WCA evoluiu ao longo da última década, mais de 100.000 pessoas já participaram de nossas competições."
 >- Fonte: "[Quem somos nós](https://www.worldcubeassociation.org/about)"  acessado em 08 de Agosto de 2020.
@@ -16,12 +16,12 @@ Existem campeonatos oficiais por todo o mundo, organizados pela Organização Mu
 Nós participamos deles, e é bem comum consultarmos o [site da WCA](https://www.worldcubeassociation.org/competitions) em buscas de competições por perto. Às vezes, entrávamos algumas vezes na semana, e nada; às vezes, esquecíamos de entrar e perdíamos um campeonato tão aguardado. 
 Para resolver esse problema, tive a ideia de fazer um script que verificasse o site periodicamente e nos notificasse quanto identificasse uma competição por perto que poderia ser de nosso interesse.
 
-## Usage:
+## Uso:
 Se inscreva, inserindo seu nome, e-mail, idioma e a cidade que deseja ser notificado preenchendo o seguinte formulário:
 
 [**Inscreva-se**](https://forms.gle/K6vW3YVAYp4d6nb97)
 
-## Execution:
+## Execução:
 Para executar o projeto, eu inicialmente usei Python com as bibliotecas `requests` e `BeaultifulSoup` para web scrapping no site em sí e `smtplib` para o envio de e-mails.
 Mas eu fiz uma migração para a linguagem Go, com a API da WCA no lugar do front-end do site. Eu estudei modulação do código em pacotes locais, o uso de bibliotecas como `spreadsheet` para conectar-se com a API do Google Planilhas e o `gomail` para enviar as notificações.
 

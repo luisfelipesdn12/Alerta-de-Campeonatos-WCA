@@ -1,6 +1,8 @@
 package gspread
 
 import (
+	"strconv"
+
 	"gopkg.in/Iwark/spreadsheet.v2"
 )
 
@@ -17,6 +19,7 @@ type RecipientStruct struct {
 	City                        spreadsheet.Cell
 	UpcomingCompetitions        spreadsheet.Cell
 	LastVerification            spreadsheet.Cell
+	Sheet                       *spreadsheet.Sheet
 	CurrentUpcomingCompetitions int
 	CurrentVerificationDate     string
 }
@@ -49,7 +52,7 @@ func GetRecipientsData() ([]RecipientStruct, error) {
 	// `spreadsheet` value. If an error happen, the
 	// function returns a empty slice of `RecipientStruct`
 	// and the error
-	recipientsSheet, err := spreadsheet.SheetByTitle("Betas")
+	recipientsSheet, err := spreadsheet.SheetByTitle("Recipients")
 	if err != nil {
 		return recipients, err
 	}
@@ -73,10 +76,31 @@ func GetRecipientsData() ([]RecipientStruct, error) {
 			City:                 rowCells[3],
 			UpcomingCompetitions: rowCells[4],
 			LastVerification:     rowCells[5],
+			Sheet:                recipientsSheet,
 		}
 		recipients = append(recipients, recipientData)
 	}
 
-	return []RecipientStruct{recipients[0]}, nil
-	// return recipients, nil
+	return recipients, nil
+}
+
+func (recipient RecipientStruct) UpdateUpcomingCompetitions() error {
+	recipient.Sheet.Update(
+		int(recipient.UpcomingCompetitions.Row),
+		int(recipient.UpcomingCompetitions.Column),
+		strconv.Itoa(recipient.CurrentUpcomingCompetitions),
+	)
+
+	recipient.Sheet.Update(
+		int(recipient.LastVerification.Row),
+		int(recipient.LastVerification.Column),
+		string(recipient.CurrentVerificationDate),
+	)
+
+	err := recipient.Sheet.Synchronize()
+	if err != nil {
+		return err
+	}
+
+	return nil
 }

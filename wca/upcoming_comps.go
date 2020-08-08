@@ -11,7 +11,6 @@ import (
 )
 
 const (
-	turnLogsOn bool   = false
 	layoutISO  string = "2006-01-02"
 	apiBaseURI string = "https://www.worldcubeassociation.org/api/v0"
 )
@@ -19,7 +18,7 @@ const (
 // WCAAPIResponse is the struct based in the JSON format
 // that will be requested bellow. That's not all the data
 // provided by the API, but that´s the data witch will be
-// probally usefull later
+// probally usefull later.
 type WCAAPIResponse []struct {
 	URL             string   `json:"url"`
 	ID              string   `json:"id"`
@@ -31,30 +30,25 @@ type WCAAPIResponse []struct {
 	EventIds        []string `json:"event_ids"`
 }
 
-func init() {
-	if !(turnLogsOn) {
-		log.SetOutput(ioutil.Discard)
-	}
-}
-
 // UpcomingCopetitions given a city name, do a request to the
 // WCA API and compare the start date of each competition with
-// the current date. So, it returns the number of upcoming copetitions
+// the current date. So, it returns the number of upcoming copetitions.
 func UpcomingCopetitions(cityName string) (int, error) {
 	upcomingCompetitions := 0
 
-	currentDate := time.Now().String()[:10] // Current date in format: "yyyy-MM-dd"
+	// Current date in format: "yyyy-MM-dd"
+	currentDate := time.Now().String()[:10]
 
 	// Format the complete URI with the request params
 	// defined in the `cityName` param and the currentDate
-	// to find just the upcoming competitions
+	// to find just the upcoming competitions.
 	queryParam := fmt.Sprintf("?start=%v&q=%v", currentDate, url.QueryEscape(cityName))
 	URI := fmt.Sprintf(
 		"%v/competitions/%v",
 		apiBaseURI, queryParam,
 	)
 
-	// Do the request, if an error the function returns 0 and the error
+	// Do the request, if an error the function returns 0 and the error.
 	log.Printf("Doing a resquest to: %v\n", URI)
 	resp, err := http.Get(URI)
 	if err != nil {
@@ -62,7 +56,7 @@ func UpcomingCopetitions(cityName string) (int, error) {
 	}
 
 	// Get the response JSON string, if an error
-	// happen, the function returns 0 and the error
+	// happen, the function returns 0 and the error.
 	log.Println("Geting the JSON string from request")
 	defer resp.Body.Close()
 	responseAsJSON, err := ioutil.ReadAll(resp.Body)
@@ -72,7 +66,7 @@ func UpcomingCopetitions(cityName string) (int, error) {
 
 	// Transform the response JSON string in the
 	// structure WCAAPIResponse. If an error
-	// happen, the function returns 0 and the error
+	// happen, the function returns 0 and the error.
 	log.Println("Converting the JSON string to response structure")
 	responseAsStruct := WCAAPIResponse{}
 	err = json.Unmarshal(responseAsJSON, &responseAsStruct)
@@ -81,7 +75,7 @@ func UpcomingCopetitions(cityName string) (int, error) {
 	}
 
 	// The upcomingCompetitions is defined by the
-	// length of the results
+	// length of the results.
 	upcomingCompetitions = len(responseAsStruct)
 
 	return upcomingCompetitions, nil

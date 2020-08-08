@@ -45,6 +45,7 @@ func init() {
 
 func main() {
 
+	// Close the log file at the end of the block
 	defer logFile.Close()
 
 	// Using the `gspred` local package to do the
@@ -64,6 +65,12 @@ func main() {
 	credentials, err := gspread.GetCredentialsData(spreadData)
 	checkError(err)
 
+	// Create a map to allocate the cities and the
+	// upcoming competitions number. It will be used
+	// to check if the verification already exists and
+	// improve the performance.
+	cityUpcomingCompetitionsCache := make(map[string]int)
+
 	// For each recipient object, get the current number
 	// of upcoming competitions, compare with the obsolete
 	// value, and send a an email notifying if the value
@@ -73,15 +80,37 @@ func main() {
 		// Current date in format: "yyyy-MM-dd hh-mm-ss"
 		recipient.CurrentVerificationDate = time.Now().String()[:19]
 
-		// Using the `wca` local package to get the number
-		// of upcoming competitions in the city of the recipient.
-		// If an error happen, it is logged and the loop goes
-		// to the next recipient in the slice.
-		result, err := wca.UpcomingCopetitions(recipient.City.Value)
-		recipient.CurrentUpcomingCompetitions = result
-		if err != nil {
-			log.Fatal(err)
-			continue
+		// If the value of upcoming competitions to the
+		// recipients city already exists in the map
+		// `cityUpcomingCompetitionsCache`, uses this value.
+		// If not, uses the `wca` local package to access the
+		// WCA's API and put the result in the above-mentioned
+		// map, so it can be reused in the next times.
+		if result, ok := cityUpcomingCompetitionsCache[recipient.City.Value]; ok {
+			log.Printf(
+				"The cache value for %v (%v) was reused to %v\n",
+				recipient.City.Value,
+				result,
+				recipient.Name.Value,
+			)
+			recipient.CurrentUpcomingCompetitions = result
+		} else {
+			// Using the `wca` local package to get the number
+			// of upcoming competitions in the city of the recipient.
+			// If an error happen, it is logged and the loop goes
+			// to the next recipient in the slice.
+			result, err := wca.UpcomingCopetitions(recipient.City.Value)
+			if err != nil {
+				log.Fatal(err)
+				continue
+			}
+
+			// If there is no errors, the result value is attributed
+			// to the propriertie `CurrentUpcomingCompetitions` in the
+			// `RecipientStruct` and goes to `cityUpcomingCompetitionsCache`
+			// map, so it can be reused in the next times.
+			recipient.CurrentUpcomingCompetitions = result
+			cityUpcomingCompetitionsCache[recipient.City.Value] = result
 		}
 
 		log.Printf(
@@ -121,6 +150,8 @@ func main() {
 
 		email.SendEmail(recipient, credentials)
 	}
+
+	log.Printf("The cache was this: %v\n", cityUpcomingCompetitionsCache)
 }
 
 func checkError(err error) {

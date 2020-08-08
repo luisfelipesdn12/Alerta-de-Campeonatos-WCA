@@ -60,4 +60,6 @@ Na minha conta do Google, a planilha está organizada neste formato (com os nome
 | minhaconta@gmail.com | minh453nh4 |
 
 ## *To do*:
-- [ ] Adicionar um `map` em tempo de execução com `{cidade : competições futuras}` e se a cidade já foi verificada em outro destinatário, não verificar de novo e pegar este dado do `map`.
+- [x] Adicionar um `map` em tempo de execução com `{cidade : competições futuras}` e se a cidade já foi verificada em outro destinatário, não verificar de novo e pegar este dado do `map`.
+
+> Sugira algo a fazer nos [issues](https://github.com/luisfelipesdn12/Alerta-de-Campeonatos-WCA/issues) :)

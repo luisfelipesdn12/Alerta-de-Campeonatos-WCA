@@ -2,3 +2,10 @@ client_secret.json
 .vscode/
 main.exe
 main.log
+
+# I configurated other script witch upload the main.log
+# to my Google Drive Account, so I can to check it in
+# any device. The following files is for this:
+client_secret_upload_log_to_drive.json
+upload_log_to_drive.go
+upload_log_to_drive.exe

@@ -25,9 +25,13 @@ func main() {
 	// Using the `gspred` local package to get the data
 	// of each recipient from Google SpreadSheets.
 	recipients, err := gspread.GetRecipientsData()
-	if err != nil {
-		log.Fatal(err)
-	}
+	checkError(err)
+
+	// Using the `gspred` local package to get the
+	// credentials data from Google SpreadSheets. It
+	// will be used to send the emails below.
+	credentials, err := gspread.GetCredentialsData()
+	checkError(err)
 
 	// For each recipient object, get the current number
 	// of upcoming competitions, compare with the obsolete
@@ -84,6 +88,12 @@ func main() {
 			continue
 		}
 
-		email.SendEmail(recipient)
+		email.SendEmail(recipient, credentials)
+	}
+}
+
+func checkError(err error) {
+	if err != nil {
+		log.Fatal(err)
 	}
 }

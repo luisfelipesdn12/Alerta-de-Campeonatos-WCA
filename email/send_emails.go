@@ -8,9 +8,14 @@ import (
 	"gopkg.in/gomail.v2"
 )
 
-func SendEmail(r gspread.RecipientStruct) {
+// SendEmail send an email to the recipient notifying
+// the difference between the current number of upcoming
+// competitions and the obsolete number.
+func SendEmail(r gspread.RecipientStruct, credentials gspread.CredentialStruct) {
+
+	// Compose the message object
 	m := gomail.NewMessage()
-	m.SetHeader("From", "apisbyluisfelipesdn12@gmail.com")
+	m.SetHeader("From", credentials.Email)
 	m.SetHeader("To", r.Email.Value)
 	m.SetHeader("Subject", ("Olá, " + r.Name.Value + "! Atualizações nas competições da WCA em " + r.City.Value + " - " + time.Now().String()[:16]))
 	m.SetBody(
@@ -48,16 +53,17 @@ func SendEmail(r gspread.RecipientStruct) {
 		),
 	)
 
-	credentials, err := gspread.GetCredentialsData()
-	checkError(err)
-
+	// Do the "login" with the credentials to now
+	// be able to send the email with the provided
+	// email address above.
 	d := gomail.NewDialer(
 		"smtp.gmail.com", 587,
 		credentials.Email,
 		credentials.Password,
 	)
 
-	err = d.DialAndSend(m)
+	// Send the email.
+	err := d.DialAndSend(m)
 	checkError(err)
 }
 

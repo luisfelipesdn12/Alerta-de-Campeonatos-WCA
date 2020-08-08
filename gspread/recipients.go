@@ -90,6 +90,9 @@ func GetRecipientsData() ([]RecipientStruct, error) {
 	return recipients, nil
 }
 
+// UpdateUpcomingCompetitions update the recipient date
+// in the spreadsheet with the new upcoming competitions
+// number and last verifications date
 func (recipient RecipientStruct) UpdateUpcomingCompetitions() error {
 	recipient.Sheet.Update(
 		int(recipient.UpcomingCompetitions.Row),

@@ -3,6 +3,7 @@ package main
 import (
 	"io/ioutil"
 	"log"
+	"os"
 	"strconv"
 	"time"
 
@@ -15,13 +16,37 @@ const (
 	turnLogsOn bool = true
 )
 
+var (
+	// This log file variable is defined globally
+	// because it need to be visible for init() and
+	// main().
+	logFile, err = os.OpenFile("main.log", os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0644)
+)
+
+// init basically check the option turnLogsOn above,
+// if this options is true, it set the `logFile` as
+// output of logs; if is false, if discard the logs.
 func init() {
 	if !(turnLogsOn) {
 		log.SetOutput(ioutil.Discard)
+	} else {
+		// this check the error of the var declaration
+		// with `os.OpenFile()`
+		checkError(err)
+
+		// this clear the `logFile` before starting
+		// to write new logs on it
+		err = os.Truncate("main.log", 0)
+		checkError(err)
+
+		log.SetOutput(logFile)
 	}
 }
 
 func main() {
+
+	defer logFile.Close()
+
 	// Using the `gspred` local package to get the data
 	// of each recipient from Google SpreadSheets.
 	recipients, err := gspread.GetRecipientsData()

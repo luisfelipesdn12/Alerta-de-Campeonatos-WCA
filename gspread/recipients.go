@@ -18,6 +18,7 @@ type RecipientStruct struct {
 	Name                        spreadsheet.Cell
 	Email                       spreadsheet.Cell
 	City                        spreadsheet.Cell
+	Language                    spreadsheet.Cell
 	UpcomingCompetitions        spreadsheet.Cell
 	LastVerification            spreadsheet.Cell
 	Sheet                       *spreadsheet.Sheet
@@ -78,8 +79,9 @@ func GetRecipientsData() ([]RecipientStruct, error) {
 			Name:                 rowCells[1],
 			Email:                rowCells[2],
 			City:                 rowCells[3],
-			UpcomingCompetitions: rowCells[4],
-			LastVerification:     rowCells[5],
+			Language:             rowCells[4],
+			UpcomingCompetitions: rowCells[5],
+			LastVerification:     rowCells[6],
 			Sheet:                recipientsSheet,
 		}
 		recipients = append(recipients, recipientData)

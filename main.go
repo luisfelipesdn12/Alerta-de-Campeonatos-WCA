@@ -123,12 +123,22 @@ func main() {
 
 		// Convert the `Upcoming Competitions` of the sheet
 		// (a string) to an integer value, so it can be an
-		// operating. If an error happen, it is logged and
-		// the loop goes to the next recipient in the slice.
+		// operating. If an error happen because the
+		// `recipient.UpcomingCompetitions.Value` is a
+		// non-convertable string (for example, when this
+		// is the first verification of the recipient and
+		// the value is ""), the value will be defined as the
+		// current upcoming competitions number and no emails
+		// will be sended. If non-predicate an error happen,
+		// it is logged and the loop goes to the next recipient
+		// in the slice.
 		upcomingCompetitionsInInteger, err := strconv.Atoi(recipient.UpcomingCompetitions.Value)
 		if err != nil {
-			log.Fatal(err)
-			continue
+			if err.Error() == `strconv.Atoi: parsing "`+recipient.UpcomingCompetitions.Value+`": invalid syntax` {
+				upcomingCompetitionsInInteger = recipient.CurrentUpcomingCompetitions
+			} else {
+				continue
+			}
 		}
 
 		// Update the recipient cell in the spreadsheet.

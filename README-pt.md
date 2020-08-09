@@ -13,7 +13,8 @@ A script witch send an e-mail when there's a new WCA competition.
 
 Eu e meus amigos temos como *hobbie* o *speedcubing*, simplificadamente: montar cubo-mágico e outros quebra-cabeças no menor tempo possível.  
 Existem campeonatos oficiais por todo o mundo, organizados pela Organização Mundial de Cubo Mágico (WCA), supracitada.
-><img src="https://www.cps.sp.gov.br/wp-content/uploads/sites/1/2019/08/Etec-Jacare%C3%AD-4%C2%BA-campeonato-mundial-do-cubo.jpg" width="600">
+
+<img src="https://www.cps.sp.gov.br/wp-content/uploads/sites/1/2019/08/Etec-Jacare%C3%AD-4%C2%BA-campeonato-mundial-do-cubo.jpg" width="600">
 
 Nós participamos deles, e é bem comum consultarmos o [site da WCA](https://www.worldcubeassociation.org/competitions) em buscas de competições por perto. Às vezes, entrávamos algumas vezes na semana, e nada; às vezes, esquecíamos de entrar e perdíamos um campeonato tão aguardado. 
 Para resolver este problema, tive a ideia de fazer um script que verificasse o site periodicamente e nos notificasse quanto identificasse uma competição por perto que poderia ser de nosso interesse.

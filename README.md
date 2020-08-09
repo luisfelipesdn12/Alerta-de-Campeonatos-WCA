@@ -13,7 +13,8 @@ As the WCA has evolved over the past decade, over 100,000 people have competed i
 
 Me and my friends have the *speedcubing* as a hobbie, simplified: solve rubik's cube and other puzzles in the lowest time as possible.
 There's official competitions all over the world, realized by the World Cube Association (WCA), as above-mentioned.
-><img src="https://www.cps.sp.gov.br/wp-content/uploads/sites/1/2019/08/Etec-Jacare%C3%AD-4%C2%BA-campeonato-mundial-do-cubo.jpg" width="600">
+
+<img src="https://www.cps.sp.gov.br/wp-content/uploads/sites/1/2019/08/Etec-Jacare%C3%AD-4%C2%BA-campeonato-mundial-do-cubo.jpg" width="600">
 
 We participate in them, and is very common we check the [WCA's site](https://www.worldcubeassociation.org/competitions) searching for nearly competitions. Sometimes, we check few times a week, and nothing; sometimes, we forgot to check and lost a long-awaited competition. 
 To solve this issue, I had the idea of making a script that would check the site periodically and notify us when it identified a competition nearby that could be of interest to us.

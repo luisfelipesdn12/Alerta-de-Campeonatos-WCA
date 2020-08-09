@@ -21,6 +21,7 @@ package gspread
 import (
 	"log"
 	"strconv"
+	"strings"
 
 	"gopkg.in/Iwark/spreadsheet.v2"
 )
@@ -83,6 +84,10 @@ func GetRecipientsData(spreadData spreadsheet.Spreadsheet) ([]RecipientStruct, e
 			LastVerification:     rowCells[6],
 			Sheet:                recipientsSheet,
 		}
+
+		stripIfNecessary(&recipientData.Name.Value)
+		stripIfNecessary(&recipientData.Email.Value)
+		stripIfNecessary(&recipientData.City.Value)
 		recipients = append(recipients, recipientData)
 	}
 
@@ -112,4 +117,10 @@ func (recipient RecipientStruct) UpdateUpcomingCompetitions() error {
 	}
 
 	return nil
+}
+
+func stripIfNecessary(s *string) {
+	if strings.HasPrefix(*s, "") || strings.HasSuffix(*s, " ") {
+		*s = strings.TrimSpace(*s)
+	}
 }

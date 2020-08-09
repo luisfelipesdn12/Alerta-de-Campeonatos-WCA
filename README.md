@@ -2,7 +2,7 @@
 Um script que manda um e-mail quando há um campeonato novo na WCA.
 A script witch send an e-mail when there's a new WCA competition. 
 
-![Header](https://raw.githubusercontent.com/luisfelipesdn12/Alerta-de-Campeonatos-WCA/golang/images/Email%20Header%20English.png)
+![Header](https://raw.githubusercontent.com/luisfelipesdn12/Alerta-de-Campeonatos-WCA/master/images/Email%20Header%20English.png)
 
 ## Ideia:
 >"The World Cube Association governs competitions for mechanical puzzles that are operated by twisting groups of pieces, commonly known as 'twisty puzzles'. The most famous of these puzzles is the Rubik's Cube, invented by professor Rubik from Hungary. A selection of these puzzles are chosen as official events of the WCA.

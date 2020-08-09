@@ -50,7 +50,7 @@ func SendEmail(r gspread.RecipientStruct, credentials gspread.CredentialStruct) 
 	switch r.Language.Value {
 	case "Português":
 		emailLiteralTemplate = `
-			<img src="https://raw.githubusercontent.com/luisfelipesdn12/Alerta-de-Campeonatos-WCA/golang/images/%v" style="%v">
+			<img src="https://raw.githubusercontent.com/luisfelipesdn12/Alerta-de-Campeonatos-WCA/master/images/%v" style="%v">
 			<h1>Olá, %v</h1>
 
 			<i>Este email é enviado automaticamente e tem informações sobre competições oficiais da WCA na cidade %v.</i>
@@ -74,7 +74,7 @@ func SendEmail(r gspread.RecipientStruct, credentials gspread.CredentialStruct) 
 
 	default:
 		emailLiteralTemplate = `
-			<img src="https://raw.githubusercontent.com/luisfelipesdn12/Alerta-de-Campeonatos-WCA/golang/images/%v" style="%v">
+			<img src="https://raw.githubusercontent.com/luisfelipesdn12/Alerta-de-Campeonatos-WCA/master/images/%v" style="%v">
 			<h1>Hello, %v</h1>
 
 			<i>This message is automatic sended and have information about official WCA competitions in the city of %v.</i>

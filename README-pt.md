@@ -4,6 +4,8 @@ A script witch send an e-mail when there's a new WCA competition.
 
 ![Header](https://raw.githubusercontent.com/luisfelipesdn12/Alerta-de-Campeonatos-WCA/master/images/Email%20Header%20Portuguese.png)
 
+[![GoDoc](https://godoc.org/github.com/luisfelipesdn12/Alerta-de-Campeonatos-WCA?status.svg)](https://godoc.org/github.com/luisfelipesdn12/Alerta-de-Campeonatos-WCA)
+
 ## Idéia:
 >"A World Cube Association regula competicões de quebra-cabeças mecânicos que são operados girando-se os lados, comumente chamados de "twisty puzzles". O mais famoso deles é o "Rubik's Cube" (Cubo Mágico ou Cubo de Rubik), inventado pelo professor Rubik, da Hungria. Alguns destes quebra-cabeças são eventos oficiais da WCA.
 À medida que a WCA evoluiu ao longo da última década, mais de 100.000 pessoas já participaram de nossas competições."

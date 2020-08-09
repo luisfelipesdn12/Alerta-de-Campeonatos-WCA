@@ -1,5 +1,5 @@
 /*
-	Alerta-deCampeonatos-WCA - A script witch send an e-mail when there's a new WCA competition.
+	Alerta-de-Campeonatos-WCA - A script witch send an e-mail when there's a new WCA competition.
 	Copyright (C) 2020  Luis Felipe Santos do Nascimento
 
 	This program is free software: you can redistribute it and/or modify

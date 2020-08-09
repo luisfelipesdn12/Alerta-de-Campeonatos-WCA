@@ -16,8 +16,9 @@
 	along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-// Package gspread implements functions to access the data
-// from the Google account with the Google Sheets API.
+// Package gspread is a local package and implements
+// functions to access recipients and credentials
+// data from the Google account with the Google Sheets API.
 package gspread
 
 import (

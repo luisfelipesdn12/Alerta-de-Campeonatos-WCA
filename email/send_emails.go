@@ -16,8 +16,9 @@
 	along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-// Package email implement functions to sends email
-// given the `gspread.RecipientStruct` structure.
+// Package email is a local package and implements
+// functions to send a notification email given the
+// `gspread.RecipientStruct` structure.
 package email
 
 import (

@@ -16,8 +16,8 @@
 	along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-// Package wca implements functions to access the data
-// from the WCA's API.
+// Package wca is a local package and implements
+// functions to access the data from the WCA's API.
 package wca
 
 import (

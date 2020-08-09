@@ -35,11 +35,11 @@ const (
 	apiBaseURI string = "https://www.worldcubeassociation.org/api/v0"
 )
 
-// WCAAPIResponse is the struct based in the JSON format
+// APIResponse is the struct based in the JSON format
 // that will be requested bellow. That's not all the data
 // provided by the API, but that´s the data witch will be
 // probally usefull later.
-type WCAAPIResponse []struct {
+type APIResponse []struct {
 	URL             string   `json:"url"`
 	ID              string   `json:"id"`
 	Name            string   `json:"name"`
@@ -85,10 +85,10 @@ func UpcomingCopetitions(cityName string) (int, error) {
 	}
 
 	// Transform the response JSON string in the
-	// structure WCAAPIResponse. If an error
+	// structure APIResponse. If an error
 	// happen, the function returns 0 and the error.
 	log.Println("Converting the JSON string to response structure")
-	responseAsStruct := WCAAPIResponse{}
+	responseAsStruct := APIResponse{}
 	err = json.Unmarshal(responseAsJSON, &responseAsStruct)
 	if err != nil {
 		return upcomingCompetitions, err

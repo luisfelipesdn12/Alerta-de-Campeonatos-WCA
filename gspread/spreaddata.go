@@ -42,6 +42,7 @@ func GetSpreadData() (spreadsheet.Spreadsheet, error) {
 	log.Println("Connecting with Google SpreadSheets API")
 	service, err := spreadsheet.NewService()
 	if err != nil {
+		log.Fatal(err)
 		return spreadData, err
 	}
 
@@ -51,6 +52,7 @@ func GetSpreadData() (spreadsheet.Spreadsheet, error) {
 	log.Println("Fetching the spreadsheet in account")
 	spreadsheet, err := service.FetchSpreadsheet(spreadsheetID)
 	if err != nil {
+		log.Fatal(err)
 		return spreadData, err
 	}
 

@@ -4,6 +4,6 @@ main.exe
 main.log
 
 # I configurated other script witch upload the main.log
-# to my Google Drive Account, so I can to check it in
+# to my Telegram account, so I can to check it in
 # any device. The following files is for this:
 upload_log/

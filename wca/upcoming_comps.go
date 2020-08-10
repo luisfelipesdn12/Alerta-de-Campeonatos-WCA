@@ -31,7 +31,6 @@ import (
 )
 
 const (
-	layoutISO  string = "2006-01-02"
 	apiBaseURI string = "https://www.worldcubeassociation.org/api/v0"
 )
 

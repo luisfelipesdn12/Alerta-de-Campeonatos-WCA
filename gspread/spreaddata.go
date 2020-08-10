@@ -28,6 +28,9 @@ import (
 )
 
 const (
+	// The ID of the spreadsheet in my Google account
+	// it is visible in the URI when you are with the
+	// sheet opened.
 	spreadsheetID string = "1CVO5kb-4Rjga1scWIQHSOzA9b7JgC2RZtUe1_bjAMKM"
 )
 

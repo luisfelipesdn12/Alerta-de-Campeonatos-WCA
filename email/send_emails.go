@@ -24,16 +24,54 @@ package email
 import (
 	"fmt"
 	"log"
+	"strings"
 	"time"
 
 	"../gspread"
 	"gopkg.in/gomail.v2"
 )
 
+// ReturnATwoWordName uses the strings package to transform
+// a string value in a []string and then join it again with
+// just the first and the second string.
+//
+// Example:
+// 		n := ReturnATwoWordName("Gabriel Toshio Omiya")
+// 		fmt.Println(n)
+// 		// Output: "Gabriel Toshio"
+//
+// If the string value already have 1 or 2 words, it returns
+// the same string.
+//
+// Example:
+// 		n := ReturnATwoWordName("Gabriel Toshio")
+// 		fmt.Println(n)
+// 		// Output: "Gabriel Toshio"
+//
+// Example:
+// 		n := ReturnATwoWordName("Gabriel")
+// 		fmt.Println(n)
+// 		// Output: "Gabriel"
+func ReturnATwoWordName(s string) string {
+	separatedNames := strings.Split(s, " ")
+	if len(separatedNames) == 1 || len(separatedNames) == 2 {
+		return s
+	}
+	return strings.Join(strings.Split(s, " ")[:2], " ")
+}
+
 // SendEmail send an email to the recipient notifying
 // the difference between the current number of upcoming
 // competitions and the obsolete number.
 func SendEmail(r gspread.RecipientStruct, credentials gspread.CredentialStruct) {
+
+	// In the email subject and body, it's not convenient to
+	// use the intire name provided by the user in the form
+	// so the function SendEmail will not use the `r.Name.Value`,
+	// and in it place will use the `recipientName` value, witch
+	// is defined by the return of the `ReturnATwoWordName` function
+	// with the `r.Name.Value` as parameter.
+	recipientName := ReturnATwoWordName(r.Name.Value)
 
 	// Compose the message object
 	m := gomail.NewMessage()
@@ -70,7 +108,7 @@ func SendEmail(r gspread.RecipientStruct, credentials gspread.CredentialStruct) 
 			`
 
 		headerImageLiteral = `Email%20Header%20Portuguese.png`
-		emailSubject = ("Olá, " + r.Name.Value + "! Atualizações nas competições da WCA em " + r.City.Value + " - " + time.Now().String()[:16])
+		emailSubject = ("Olá, " + recipientName + "! Atualizações nas competições da WCA em " + r.City.Value + " - " + time.Now().String()[:16])
 
 	default:
 		emailLiteralTemplate = `
@@ -94,7 +132,7 @@ func SendEmail(r gspread.RecipientStruct, credentials gspread.CredentialStruct) 
 			`
 
 		headerImageLiteral = `Email%20Header%20English.png`
-		emailSubject = ("Hello, " + r.Name.Value + "! News about WCA competitions in " + r.City.Value + " - " + time.Now().String()[:16])
+		emailSubject = ("Hello, " + recipientName + "! News about WCA competitions in " + r.City.Value + " - " + time.Now().String()[:16])
 	}
 
 	m.SetHeader("Subject", emailSubject)
@@ -105,7 +143,7 @@ func SendEmail(r gspread.RecipientStruct, credentials gspread.CredentialStruct) 
 
 			headerImageLiteral,
 			`max-width: 100%; max-height: 100%;`,
-			r.Name.Value, r.City.Value,
+			recipientName, r.City.Value,
 			r.UpcomingCompetitions.Value,
 			r.CurrentUpcomingCompetitions,
 			r.UpcomingCompetitions.Value,

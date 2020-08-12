@@ -6,6 +6,7 @@ A script witch send an e-mail when there's a new WCA competition.
 
 [![GoDoc](https://godoc.org/github.com/luisfelipesdn12/Alerta-de-Campeonatos-WCA?status.svg)](https://godoc.org/github.com/luisfelipesdn12/Alerta-de-Campeonatos-WCA)
 [![GoReportCard](https://goreportcard.com/badge/github.com/luisfelipesdn12/Alerta-de-Campeonatos-WCA)](https://goreportcard.com/report/github.com/luisfelipesdn12/Alerta-de-Campeonatos-WCA)
+[![License](https://img.shields.io/github/license/luisfelipesdn12/Alerta-de-Campeonatos-WCA)](https://github.com/luisfelipesdn12/Alerta-de-Campeonatos-WCA/blob/master/LICENSE)
 
 ## Ideia:
 >"The World Cube Association governs competitions for mechanical puzzles that are operated by twisting groups of pieces, commonly known as 'twisty puzzles'. The most famous of these puzzles is the Rubik's Cube, invented by professor Rubik from Hungary. A selection of these puzzles are chosen as official events of the WCA.

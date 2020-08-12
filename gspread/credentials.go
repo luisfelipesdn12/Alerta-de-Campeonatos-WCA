@@ -32,7 +32,7 @@ type CredentialStruct struct {
 }
 
 // GetCredentialsData fetch the data stored in the
-// spreadsheet and tranform it in a `CredentialStruct`
+// spreadsheet and transform it in a `CredentialStruct`
 // as described above.
 func GetCredentialsData(spreadData spreadsheet.Spreadsheet) (CredentialStruct, error) {
 

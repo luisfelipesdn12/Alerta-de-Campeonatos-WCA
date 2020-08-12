@@ -71,6 +71,7 @@ func main() {
 	// fetch the specific spreadsheet of the project
 	// and return the spreadsheet data.
 	spreadData, err := gspread.GetSpreadData()
+	checkError(err)
 
 	// Using the `gspred` local package to get the data
 	// of each recipient from Google SpreadSheets.

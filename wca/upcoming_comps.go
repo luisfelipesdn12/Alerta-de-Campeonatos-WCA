@@ -37,7 +37,7 @@ const (
 // APIResponse is the struct based in the JSON format
 // that will be requested bellow. That's not all the data
 // provided by the API, but that´s the data witch will be
-// probally usefull later.
+// probally useful later.
 type APIResponse []struct {
 	URL             string   `json:"url"`
 	ID              string   `json:"id"`

@@ -63,7 +63,7 @@ type RecipientStruct struct {
 }
 
 // GetRecipientsData fetch the data stored in the
-// spreadsheet, tranform it in a slice of `RecipientStruct`
+// spreadsheet, transform it in a slice of `RecipientStruct`
 // as described above.
 func GetRecipientsData(spreadData spreadsheet.Spreadsheet) ([]RecipientStruct, error) {
 
@@ -86,7 +86,7 @@ func GetRecipientsData(spreadData spreadsheet.Spreadsheet) ([]RecipientStruct, e
 		[]RecipientStruct, 0, len(recipientsSheet.Rows)-1,
 	)
 
-	// Tranform the each row in the `RecipientStruct`
+	// Transform the each row in the `RecipientStruct`
 	// and append it to the `recipients` slice.
 	for row := 1; row < len(recipientsSheet.Rows); row++ {
 

@@ -25,7 +25,8 @@ To solve this issue, I had the idea of making a script that would check the site
 
 Subscribe, inserting your name, email, language and the city you want to be notified by filling the form bellow:
 
-[**Subscribe**](https://forms.gle/K6vW3YVAYp4d6nb97)
+
+[![Subscribe badge](https://img.shields.io/badge/subscribe%20me-I%20want%20to%20be%20notified-blue?style=for-the-badge&logo)](https://forms.gle/K6vW3YVAYp4d6nb97)
 
 ## Execution:
 To execute this project, I've initially used Python with the libraries `requests` and `BeautifulSoup` for web scrapping in the site itself and `smtplib` for sending emails. 
@@ -67,6 +68,7 @@ In my Google account, the spreadsheet is organized in this format:
 
 ## To do:
 - [x] Add an runtime `map` with `{city : upcoming copetitions}` and if the city were already verificated in other recipient, do not verificate again and catch this data from the `map`.
+- [ ] Add tests in the whole app.
 
 > Suggest something to do in [issues](https://github.com/luisfelipesdn12/Alerta-de-Campeonatos-WCA/issues) :)
 

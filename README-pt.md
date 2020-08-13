@@ -24,7 +24,7 @@ Para resolver este problema, tive a ideia de fazer um script que verificasse o s
 ## Uso:
 Se inscreva, inserindo seu nome, e-mail, idioma e a cidade que deseja ser notificado preenchendo o seguinte formulário:
 
-[**Inscreva-se**](https://forms.gle/K6vW3YVAYp4d6nb97)
+[![Badge de inscrição](https://img.shields.io/badge/inscrever--se-Eu%20quero%20ser%20notificado-blue?style=for-the-badge&logo)](https://forms.gle/K6vW3YVAYp4d6nb97)
 
 ## Execução:
 Para executar o projeto, eu inicialmente usei Python com as bibliotecas `requests` e `BeaultifulSoup` para web scrapping no site em sí e `smtplib` para o envio de e-mails.
@@ -66,6 +66,7 @@ Na minha conta do Google, a planilha está organizada neste formato (com os nome
 
 ## *To do*:
 - [x] Adicionar um `map` em tempo de execução com `{cidade : competições futuras}` e se a cidade já foi verificada em outro destinatário, não verificar de novo e pegar este dado do `map`.
+- [ ] Adicionar testes em toda a aplicação.
 
 > Sugira algo a fazer nos [issues](https://github.com/luisfelipesdn12/Alerta-de-Campeonatos-WCA/issues) :)
 

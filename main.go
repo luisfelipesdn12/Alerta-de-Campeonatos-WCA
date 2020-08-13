@@ -27,6 +27,7 @@ import (
 
 	"./email"
 	"./gspread"
+	"./resume"
 	"./wca"
 )
 
@@ -35,6 +36,8 @@ const (
 )
 
 var (
+	StartIn = time.Now()
+
 	// This log file variable is defined globally
 	// because it need to be visible for init() and
 	// main().
@@ -66,6 +69,11 @@ func main() {
 	// Close the log file at the end of the block
 	defer logFile.Close()
 
+	// Create a struct to allocate information about
+	// the runtime. It will be exported to a json file,
+	// but just when the runtime is complete successfully.
+	resumeInformation := resume.Information{}
+
 	// Using the `gspred` local package to do the
 	// connection with the Google SpreadSheet API,
 	// fetch the specific spreadsheet of the project
@@ -77,6 +85,7 @@ func main() {
 	// of each recipient from Google SpreadSheets.
 	recipients, err := gspread.GetRecipientsData(spreadData)
 	checkError(err)
+	resumeInformation.UsersChecked = len(recipients)
 
 	// Using the `gspred` local package to get the
 	// credentials data from Google SpreadSheets. It
@@ -119,8 +128,9 @@ func main() {
 			// If an error happen, it is logged and the loop goes
 			// to the next recipient in the slice.
 			result, err := wca.UpcomingCopetitions(recipient.City.Value)
+			resumeInformation.RequestsSended++
 			if err != nil {
-				log.Fatal(err)
+				log.Println(err)
 				continue
 			}
 
@@ -147,13 +157,14 @@ func main() {
 		// first verification of the recipient and the value is ""),
 		// the value will be defined as the current upcoming
 		// competitions number and no emails will be sended. If an
-		// non-predicateerror happen,  it is logged and the loop goes
+		// non-predicate error happen, it is logged and the loop goes
 		// to the next recipient in the slice.
 		upcomingCompetitionsInInteger, err := strconv.Atoi(recipient.UpcomingCompetitions.Value)
 		if err != nil {
 			if err.Error() == `strconv.Atoi: parsing "`+recipient.UpcomingCompetitions.Value+`": invalid syntax` {
 				upcomingCompetitionsInInteger = recipient.CurrentUpcomingCompetitions
 			} else {
+				log.Println(err)
 				continue
 			}
 		}
@@ -163,7 +174,7 @@ func main() {
 		// goes to the next recipient in the slice.
 		err = recipient.UpdateUpcomingCompetitions()
 		if err != nil {
-			log.Fatal(err)
+			log.Println(err)
 			continue
 		}
 
@@ -176,9 +187,14 @@ func main() {
 		}
 
 		email.SendEmail(recipient, credentials)
+		resumeInformation.EmailsSended++
 	}
 
 	log.Printf("The cache was this: %v\n", cityUpcomingCompetitionsCache)
+
+	resumeInformation.StartIn = StartIn.String()
+	resumeInformation.RuntimeDuration = time.Since(StartIn).String()
+	resumeInformation.ExportResume("resume.json")
 }
 
 func checkError(err error) {

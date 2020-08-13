@@ -36,7 +36,7 @@ const (
 )
 
 var (
-	StartIn = time.Now()
+	startIn = time.Now()
 
 	// This log file variable is defined globally
 	// because it need to be visible for init() and
@@ -192,8 +192,8 @@ func main() {
 
 	log.Printf("The cache was this: %v\n", cityUpcomingCompetitionsCache)
 
-	resumeInformation.StartIn = StartIn.String()
-	resumeInformation.RuntimeDuration = time.Since(StartIn).String()
+	resumeInformation.StartIn = startIn.String()
+	resumeInformation.RuntimeDuration = time.Since(startIn).String()
 	resumeInformation.ExportResume("resume.json")
 }
 

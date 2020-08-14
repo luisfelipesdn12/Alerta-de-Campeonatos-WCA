@@ -63,7 +63,7 @@ func ReturnATwoWordName(s string) string {
 // SendEmail send an email to the recipient notifying
 // the difference between the current number of upcoming
 // competitions and the obsolete number.
-func SendEmail(r gspread.RecipientStruct, credentials gspread.CredentialStruct) {
+func SendEmail(r gspread.RecipientStruct, credentials gspread.CredentialStruct) error {
 
 	// In the email subject and body, it's not convenient to
 	// use the intire name provided by the user in the form
@@ -166,11 +166,9 @@ func SendEmail(r gspread.RecipientStruct, credentials gspread.CredentialStruct) 
 	// Send the email.
 	log.Printf("Sending a email to %v\n", r.Email.Value)
 	err := d.DialAndSend(m)
-	checkError(err)
-}
-
-func checkError(err error) {
 	if err != nil {
-		panic(err)
+		return err
 	}
+
+	return nil
 }

@@ -186,7 +186,28 @@ func main() {
 			continue
 		}
 
-		email.SendEmail(recipient, credentials)
+		// Send the notification email, if an error occur it may
+		// turn back the upcoming competitions value in the sheet
+		// because if not the user will lost the notification.
+		err = email.SendEmail(recipient, credentials)
+		if err != nil {
+			log.Printf(
+				"An error occurred while send an notification email, the upcoming competitions of %v will be turned back to %v\n",
+				recipient.Name.Value, upcomingCompetitionsInInteger,
+			)
+
+			recipient.CurrentUpcomingCompetitions = upcomingCompetitionsInInteger
+
+			updateErr := recipient.UpdateUpcomingCompetitions()
+			if updateErr != nil {
+				log.Println("An error occurred while turn turn back in the sheet YOU SHOULD do it manually for now :/")
+				log.Fatal("The error was:", updateErr)
+			}
+
+			log.Fatal("The error while sending email was:", err)
+		}
+
+		// If the email was successfully sended, incrase in the resume.
 		resumeInformation.EmailsSended++
 	}
 

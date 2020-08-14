@@ -81,7 +81,8 @@ func GetRecipientsData(spreadData spreadsheet.Spreadsheet) ([]RecipientStruct, e
 
 	// Uses the exact recipients number to make a slice
 	// where the final `RecipientStruct` values will be
-	// stored.
+	// stored. The "-1" is because the columns title is
+	// also considerated a row, but it will not be returned.
 	recipients = make(
 		[]RecipientStruct, 0, len(recipientsSheet.Rows)-1,
 	)

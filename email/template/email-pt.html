@@ -1,0 +1,17 @@
+<img src="https://raw.githubusercontent.com/luisfelipesdn12/Alerta-de-Campeonatos-WCA/master/images/{{.HeaderImageLiteral}}" style="max-width: 100%; max-height: 100%;">
+<h1>Olá, {{.RecipientName}}</h1>
+
+<i>Este email é enviado automaticamente e tem informações sobre competições oficiais da WCA na cidade {{.Recipient.City.Value}}.</i>
+
+<p>Há uma alteração de <b>{{.Recipient.UpcomingCompetitions.Value}}</b> competições futuras, para <b>{{.Recipient.CurrentUpcomingCompetitions}}</b>;</p>
+
+<h2>Informações Gerais:</h2>
+<p><b>Copetições futuras: </b>{{.Recipient.UpcomingCompetitions.Value}}</p>
+<p><b>Verificação obsoleta: </b>{{.Recipient.LastVerification.Value}}</p>
+<br>
+<p><b>Copetições futuras: </b>{{.Recipient.CurrentUpcomingCompetitions}}</p>
+<p><b>Última verificação: </b>{{.Recipient.CurrentVerificationDate}}</p>
+
+<h3>Veja <a href="https://www.worldcubeassociation.org/competitions?utf8=%E2%9C%93&search={{.Recipient.City.Value}}">aqui</a>.</h3>
+
+<p>Teve alguma dúvida? Problema? Sugestão? Contate o e-mail <a href="mailto:apisbyluisfelipesdn12@gmail.com">apisbyluisfelipesdn12@gmail.com</a> ou abra uma "Issue" no <a href="https://github.com/luisfelipesdn12/Alerta-de-Campeonatos-WCA">GitHub</a>. Obrigado!</p>

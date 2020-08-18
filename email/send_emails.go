@@ -22,7 +22,9 @@
 package email
 
 import (
-	"fmt"
+	"bytes"
+	"html/template"
+	"io/ioutil"
 	"log"
 	"strings"
 	"time"
@@ -30,6 +32,24 @@ import (
 	"../gspread"
 	"gopkg.in/gomail.v2"
 )
+
+var englishTemplate, portugueseTemplate string
+
+// Load the template files in english and portuguese
+func init() {
+	HTMLEnglishBytes, err := ioutil.ReadFile("./email/template/email-en.html")
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	HTMLPortugueseBytes, err := ioutil.ReadFile("./email/template/email-pt.html")
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	englishTemplate = string(HTMLEnglishBytes)
+	portugueseTemplate = string(HTMLPortugueseBytes)
+}
 
 // ReturnATwoWordName uses the strings package to transform
 // a string value in a []string and then join it again with
@@ -60,6 +80,21 @@ func ReturnATwoWordName(s string) string {
 	return strings.Join(strings.Split(s, " ")[:2], " ")
 }
 
+// EmailData is the structure for the template can
+// fill the variables
+type EmailData struct {
+	// The end propertie in the header image URI
+	// witch is responsible by the language
+	HeaderImageLiteral string
+
+	// The recipient structure
+	Recipient gspread.RecipientStruct
+
+	// The name witch returned from the
+	// ReturnATwoWordName function
+	RecipientName string
+}
+
 // SendEmail send an email to the recipient notifying
 // the difference between the current number of upcoming
 // competitions and the obsolete number.
@@ -78,80 +113,53 @@ func SendEmail(r gspread.RecipientStruct, credentials gspread.CredentialStruct) 
 	m.SetHeader("From", credentials.Email)
 	m.SetHeader("To", r.Email.Value)
 
-	var emailLiteralTemplate string
-	var headerImageLiteral string
+	var emailBody string
 	var emailSubject string
+
+	emailData := EmailData{
+		Recipient:     r,
+		RecipientName: recipientName,
+	}
 
 	// Check the recipient language to set the email body
 	// template, the subject and the header image. By default
 	// it is English.
 	switch r.Language.Value {
 	case "Português":
-		emailLiteralTemplate = `
-			<img src="https://raw.githubusercontent.com/luisfelipesdn12/Alerta-de-Campeonatos-WCA/master/images/%v" style="%v">
-			<h1>Olá, %v</h1>
+		emailData.HeaderImageLiteral = `Email%20Header%20Portuguese.png`
 
-			<i>Este email é enviado automaticamente e tem informações sobre competições oficiais da WCA na cidade %v.</i>
+		// It will store the template result as a writer
+		var templateHolder bytes.Buffer
 
-			<p>Há uma alteração de <b>%v</b> competições futuras, para <b>%v</b>;</p>
+		t, err := template.New("email").Parse(portugueseTemplate)
+		err = t.Execute(&templateHolder, emailData)
+		if err != nil {
+			return err
+		}
 
-			<h2>Informações Gerais:</h2>
-			<p><b>Copetições futuras: </b>%v</p>
-			<p><b>Verificação obsoleta: </b>%v</p>
-			<br>
-			<p><b>Copetições futuras: </b>%v</p>
-			<p><b>Última verificação: </b>%v</p>
-
-			<h3>Veja <a href="https://www.worldcubeassociation.org/competitions?utf8=%v&search=%v">aqui</a>.</h3>
-
-			<p>Teve alguma dúvida? Problema? Sugestão? Contate o e-mail <a href="mailto:apisbyluisfelipesdn12@gmail.com">apisbyluisfelipesdn12@gmail.com</a> ou abra uma "Issue" no <a href="https://github.com/luisfelipesdn12/Alerta-de-Campeonatos-WCA">GitHub</a>. Obrigado!</p>
-			`
-
-		headerImageLiteral = `Email%20Header%20Portuguese.png`
+		// Then, it is converted to string
+		emailBody = templateHolder.String()
 		emailSubject = ("Olá, " + recipientName + "! Atualizações nas competições da WCA em " + r.City.Value + " - " + time.Now().String()[:16])
 
 	default:
-		emailLiteralTemplate = `
-			<img src="https://raw.githubusercontent.com/luisfelipesdn12/Alerta-de-Campeonatos-WCA/master/images/%v" style="%v">
-			<h1>Hello, %v</h1>
+		emailData.HeaderImageLiteral = `Email%20Header%20English.png`
 
-			<i>This message is automatic sended and have information about official WCA competitions in the city of %v.</i>
+		var templateHolder bytes.Buffer
 
-			<p>There is a change from <b>%v</b> upcoming competitions, to <b>%v</b>;</p>
+		t, err := template.New("email").Parse(englishTemplate)
+		err = t.Execute(&templateHolder, emailData)
+		if err != nil {
+			return err
+		}
 
-			<h2>Information:</h2>
-			<p><b>Upcoming competitions: </b>%v</p>
-			<p><b>Obsolete verification: </b>%v</p>
-			<br>
-			<p><b>Upcoming competitions: </b>%v</p>
-			<p><b>Last verification: </b>%v</p>
-
-			<h3>See more <a href="https://www.worldcubeassociation.org/competitions?utf8=%v&search=%v">here</a>.</h3>
-
-			<p>Some doubt? Issue? Suggestion? Contact the email <a href="mailto:apisbyluisfelipesdn12@gmail.com">apisbyluisfelipesdn12@gmail.com</a> or open an "Issue" in <a href="https://github.com/luisfelipesdn12/Alerta-de-Campeonatos-WCA">GitHub</a>. Thank you!</p>
-			`
-
-		headerImageLiteral = `Email%20Header%20English.png`
+		emailBody = templateHolder.String()
 		emailSubject = ("Hello, " + recipientName + "! News about WCA competitions in " + r.City.Value + " - " + time.Now().String()[:16])
 	}
 
 	m.SetHeader("Subject", emailSubject)
 	m.SetBody(
 		"text/html",
-		fmt.Sprintf(
-			emailLiteralTemplate,
-
-			headerImageLiteral,
-			`max-width: 100%; max-height: 100%;`,
-			recipientName, r.City.Value,
-			r.UpcomingCompetitions.Value,
-			r.CurrentUpcomingCompetitions,
-			r.UpcomingCompetitions.Value,
-			r.LastVerification.Value,
-			r.CurrentUpcomingCompetitions,
-			r.CurrentVerificationDate,
-			`%E2%9C%93`, r.City.Value,
-		),
+		emailBody,
 	)
 
 	// Do the "login" with the credentials to now

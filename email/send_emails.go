@@ -85,7 +85,7 @@ func ReturnATwoWordName(s string) string {
 type EmailData struct {
 	// The end propertie in the header image URI
 	// witch is responsible by the language
-	HeaderImageLiteral string
+	HeaderImageName string
 
 	// The recipient structure
 	Recipient gspread.RecipientStruct
@@ -126,7 +126,7 @@ func SendEmail(r gspread.RecipientStruct, credentials gspread.CredentialStruct) 
 	// it is English.
 	switch r.Language.Value {
 	case "Português":
-		emailData.HeaderImageLiteral = `Email%20Header%20Portuguese.png`
+		emailData.HeaderImageName = `Email%20Header%20Portuguese%20Compressed.png`
 
 		// It will store the template result as a writer
 		var templateHolder bytes.Buffer
@@ -142,7 +142,7 @@ func SendEmail(r gspread.RecipientStruct, credentials gspread.CredentialStruct) 
 		emailSubject = ("Olá, " + recipientName + "! Atualizações nas competições da WCA em " + r.City.Value + " - " + time.Now().String()[:16])
 
 	default:
-		emailData.HeaderImageLiteral = `Email%20Header%20English.png`
+		emailData.HeaderImageName = `Email%20Header%20English%20Compressed.png`
 
 		var templateHolder bytes.Buffer
 

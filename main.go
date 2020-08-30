@@ -212,6 +212,7 @@ func main() {
 	}
 
 	log.Printf("The cache was this: %v\n", cityUpcomingCompetitionsCache)
+	log.Printf("THE EXECUTION WAS DONE")
 
 	resumeInformation.StartIn = startIn.String()
 	resumeInformation.RuntimeDuration = time.Since(startIn).String()

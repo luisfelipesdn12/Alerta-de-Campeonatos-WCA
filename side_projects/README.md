@@ -20,3 +20,13 @@ Somethings for help me to get constantly informed about the executions
   - A button to the `main.log` gist.
 - I can set it to send me everytime, just when was done or just when was not done.
 - [Go to the package](./notification)
+
+## Runtime information website:
+- Render in a website the following information:
+  - Emails sended.
+  - Users checked.
+  - Requests sended.
+  - Runtime duration.
+  - Runtime date/time.
+- [Go to the repository](https://github.com/luisfelipesdn12/Runtime-Information-WCA-Alert)
+- [Go to access the site](https://luisfelipesdn12.github.io/Runtime-Information-WCA-Alert/)

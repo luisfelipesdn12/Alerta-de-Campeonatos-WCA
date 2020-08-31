@@ -4,6 +4,9 @@ resume.json
 main.exe
 main.log
 
+side_projects/secret.json
+
+
 # I configurated other script witch upload the main.log
 # to my Telegram account, so I can to check it in
 # any device. The following files is for this:

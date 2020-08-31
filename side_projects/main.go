@@ -43,7 +43,7 @@ func main() {
 
 	// Update the `resume.json` and the `main.log` file to
 	// their GitHub gists.
-	exec.Command("./update_gists/update_gists.py").Run()
+	exec.Command("python.exe", "./update_gists/update_gists.py").Run()
 
 	// Sends a toast notification with execution information.
 	notification.Notify(secretJSON.GitHubMainLogGistURL)

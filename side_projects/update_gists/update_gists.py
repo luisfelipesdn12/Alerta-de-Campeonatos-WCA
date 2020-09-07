@@ -13,8 +13,8 @@ resume_gist = gh.get_gist(secret_json["GitHubResumeGistURL"].split("/")[-1])
 main_log_gist = gh.get_gist(secret_json["GitHubMainLogGistURL"].split("/")[-1])
 
 # Read the files of resume json and main log
-resume_content = " ".join(open("./../resume.json").readlines())
-main_log_content = open("./../main.log").read()
+resume_content = " ".join(open("./../resume.json", encoding='utf-8').readlines())
+main_log_content = open("./../main.log", encoding='utf-8').read()
 
 
 resume_gist.edit(

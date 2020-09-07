@@ -12,11 +12,11 @@ import (
 const notifyWhenDone = false
 const notifyWhenNotDone = true
 
-var gitHubMainLogGistURL string
+var gitHubMainLogGistURL, GitHubMainLogGistLastCommitHash string
 
 // Notify throws an toast notification with information
 // about the execution.
-func Notify(GitHubMainLogGistURL string) {
+func Notify(GitHubMainLogGistURL, GitHubMainLogGistLastCommitHash string) {
 	gitHubMainLogGistURL = GitHubMainLogGistURL
 
 	logFile, err := ioutil.ReadFile("../main.log")
@@ -43,7 +43,7 @@ func sendTheNotification(title string) {
 		Message: "See more information in main.log",
 		Actions: []toast.Action{
 			{"protocol", "Open resume", `https://luisfelipesdn12.github.io/Runtime-Information-WCA-Alert/`},
-			{"protocol", "Open main.log", gitHubMainLogGistURL},
+			{"protocol", "Open main.log", (gitHubMainLogGistURL + "/" + GitHubMainLogGistLastCommitHash)},
 		},
 	}
 	err := notification.Push()

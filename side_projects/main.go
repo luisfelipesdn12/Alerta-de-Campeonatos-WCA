@@ -21,6 +21,8 @@ type SecretJSONStruct struct {
 	TelegramRecipientID int
 	// The URL of the secret GitHub gist witch stores the main.log.
 	GitHubMainLogGistURL string
+	// The hash of the last commit to send permalinks in notification.
+	GitHubMainLogGistLastCommitHash string
 }
 
 var secretJSON SecretJSONStruct
@@ -28,7 +30,7 @@ var secretJSON SecretJSONStruct
 // Will fetch the token from the `secret.json` file
 // and assign to the `secretJSON` structure so it
 // can be used by the other packages.
-func init() {
+func setSecretJSON() {
 	secretJSONFile, err := ioutil.ReadFile("./secret.json")
 	if err != nil {
 		log.Fatalln(err)
@@ -38,13 +40,29 @@ func init() {
 }
 
 func main() {
-	// Sends a Telegram message with the main.log file.
-	sendmelog.Send(secretJSON.TelegramBotToken, secretJSON.TelegramRecipientID, secretJSON.GitHubMainLogGistURL)
-
 	// Update the `resume.json` and the `main.log` file to
 	// their GitHub gists.
-	exec.Command("python.exe", "./update_gists/update_gists.py").Run()
+	updateGistsCommand := exec.Command(
+		"python.exe", "./update_gists/update_gists.py",
+	)
+	updateGistsCommand.Start()
+	updateGistsCommand.Wait()
+
+	// Set the secretJSON variable with the property
+	// `GitHubMainLogGistLastCommitHash` already updated.
+	setSecretJSON()
+
+	// Sends a Telegram message with the main.log file.
+	sendmelog.Send(
+		secretJSON.TelegramBotToken,
+		secretJSON.TelegramRecipientID,
+		secretJSON.GitHubMainLogGistURL,
+		secretJSON.GitHubMainLogGistLastCommitHash,
+	)
 
 	// Sends a toast notification with execution information.
-	notification.Notify(secretJSON.GitHubMainLogGistURL)
+	notification.Notify(
+		secretJSON.GitHubMainLogGistURL,
+		secretJSON.GitHubMainLogGistLastCommitHash,
+	)
 }

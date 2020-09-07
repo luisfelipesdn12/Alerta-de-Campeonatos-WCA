@@ -16,7 +16,7 @@ const notifyWhenDone = false
 const notifyWhenNotDone = true
 
 // Send actually send to the Telegram receiver the main.log file.
-func Send(TelegramBotToken string, TelegramRecipientID int, GitHubMainLogGistURL string) {
+func Send(TelegramBotToken string, TelegramRecipientID int, GitHubMainLogGistURL, GitHubMainLogGistLastCommitHash string) {
 	logFile, err := ioutil.ReadFile("../main.log")
 	if err != nil {
 		log.Fatalln("Error while opening main.log: " + err.Error())
@@ -38,7 +38,10 @@ func Send(TelegramBotToken string, TelegramRecipientID int, GitHubMainLogGistURL
 	case true:
 		if notifyWhenDone {
 			bot.Send(recipient,
-				fmt.Sprintf("The execution of WCA-Alert WAS done\n\n[See more here!](%v)", GitHubMainLogGistURL),
+				fmt.Sprintf(
+					"The execution of WCA-Alert WAS done\n\n[See more here!](%v)",
+					(GitHubMainLogGistURL+"/"+GitHubMainLogGistLastCommitHash),
+				),
 				&tb.SendOptions{
 					ParseMode: "Markdown",
 				},
@@ -49,7 +52,10 @@ func Send(TelegramBotToken string, TelegramRecipientID int, GitHubMainLogGistURL
 	case false:
 		if notifyWhenNotDone {
 			bot.Send(recipient,
-				fmt.Sprintf("The execution of WCA-Alert WAS NOT done\n\n[See more here!](%v)", GitHubMainLogGistURL),
+				fmt.Sprintf(
+					"The execution of WCA-Alert WAS NOT done\n\n[See more here!](%v)",
+					(GitHubMainLogGistURL+"/"+GitHubMainLogGistLastCommitHash),
+				),
 				&tb.SendOptions{
 					ParseMode: "Markdown",
 				},

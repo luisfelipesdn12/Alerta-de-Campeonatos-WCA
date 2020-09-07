@@ -132,6 +132,10 @@ func SendEmail(r gspread.RecipientStruct, credentials gspread.CredentialStruct) 
 		var templateHolder bytes.Buffer
 
 		t, err := template.New("email").Parse(portugueseTemplate)
+		if err != nil {
+			return err
+		}
+
 		err = t.Execute(&templateHolder, emailData)
 		if err != nil {
 			return err
@@ -147,6 +151,10 @@ func SendEmail(r gspread.RecipientStruct, credentials gspread.CredentialStruct) 
 		var templateHolder bytes.Buffer
 
 		t, err := template.New("email").Parse(englishTemplate)
+		if err != nil {
+			return err
+		}
+
 		err = t.Execute(&templateHolder, emailData)
 		if err != nil {
 			return err

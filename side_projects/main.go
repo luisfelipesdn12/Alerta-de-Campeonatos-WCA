@@ -11,7 +11,7 @@ import (
 )
 
 // SecretJSONStruct stores useful and confidential variables as
-// telegram tokens adn IDs, secret GitHub gists etc.
+// telegram tokens and IDs, secret GitHub gists etc.
 type SecretJSONStruct struct {
 	// The token provided by Telegram to control the bot.
 	// Know more in: https://core.telegram.org/bots

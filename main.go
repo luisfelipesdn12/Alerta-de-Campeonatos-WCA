@@ -1,5 +1,5 @@
 /*
-	Alerta-de-Campeonatos-WCA - A script witch send an e-mail when there's a new WCA competition.
+	Alerta-de-Campeonatos-WCA - A script which send an e-mail when there's a new WCA competition.
 	Copyright (C) 2020  Luis Felipe Santos do Nascimento
 
 	This program is free software: you can redistribute it and/or modify
@@ -25,10 +25,10 @@ import (
 	"strconv"
 	"time"
 
-	"./email"
-	"./gspread"
-	"./resume"
-	"./wca"
+	"github.com/luisfelipesdn12/Alerta-de-Campeonatos-WCA/email"
+	"github.com/luisfelipesdn12/Alerta-de-Campeonatos-WCA/gspread"
+	"github.com/luisfelipesdn12/Alerta-de-Campeonatos-WCA/resume"
+	"github.com/luisfelipesdn12/Alerta-de-Campeonatos-WCA/wca"
 )
 
 const (

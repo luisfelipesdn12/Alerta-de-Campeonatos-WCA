@@ -1,19 +1,7 @@
 client_secret.json
 resume.json
 .vscode/
-main.exe
-main.log
+*.exe
+*.log
 
 side_projects/secret.json
-
-
-# I configurated other script witch upload the main.log
-# to my Telegram account, so I can to check it in
-# any device. The following files is for this:
-upload_log/
-
-# I run the verifications by scheduled tasks in my PC,
-# this tasks run with no console or GUIs, so I did a
-# simple script witch run just after every verification
-# and push a notifucation to my screen.
-task_notification/ 

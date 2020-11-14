@@ -54,24 +54,6 @@ func init() {
 // ReturnATwoWordName uses the strings package to transform
 // a string value in a []string and then join it again with
 // just the first and the second string.
-//
-// Example:
-// 		n := ReturnATwoWordName("Gabriel Toshio Omiya")
-// 		fmt.Println(n)
-// 		// Output: "Gabriel Toshio"
-//
-// If the string value already have 1 or 2 words, it returns
-// the same string.
-//
-// Example:
-// 		n := ReturnATwoWordName("Gabriel Toshio")
-// 		fmt.Println(n)
-// 		// Output: "Gabriel Toshio"
-//
-// Example:
-// 		n := ReturnATwoWordName("Gabriel")
-// 		fmt.Println(n)
-// 		// Output: "Gabriel"
 func ReturnATwoWordName(s string) string {
 	separatedNames := strings.Split(s, " ")
 	if len(separatedNames) == 1 || len(separatedNames) == 2 {

@@ -1,6 +1,6 @@
 # Alerta-de-Campeonatos-WCA
 Um script que manda um e-mail quando há um campeonato novo na WCA.
-A script witch send an e-mail when there's a new WCA competition. 
+A script which send an e-mail when there's a new WCA competition. Integrates the WCA's and the Google Sheets API, the subscription is made by the Google Forms.
 
 ![Header](https://raw.githubusercontent.com/luisfelipesdn12/Alerta-de-Campeonatos-WCA/master/images/Email%20Header%20English.png)
 

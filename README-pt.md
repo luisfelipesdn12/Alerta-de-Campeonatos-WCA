@@ -1,6 +1,6 @@
 # Alerta-de-Campeonatos-WCA
 Um script que manda um e-mail quando há um campeonato novo na WCA.
-A script witch send an e-mail when there's a new WCA competition. 
+A script which send an e-mail when there's a new WCA competition. 
 
 ![Header](https://raw.githubusercontent.com/luisfelipesdn12/Alerta-de-Campeonatos-WCA/master/images/Email%20Header%20Portuguese.png)
 
@@ -73,7 +73,7 @@ Na minha conta do Google, a planilha está organizada neste formato (com os nome
 
 ## LICENSE:
 ```LICENSE
-Alerta-deCampeonatos-WCA - A script witch send an e-mail when there's a new WCA competition. 
+Alerta-deCampeonatos-WCA - A script which send an e-mail when there's a new WCA competition. 
 Copyright (C) 2020  Luis Felipe Santos do Nascimento
 
 This program is free software: you can redistribute it and/or modify

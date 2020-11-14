@@ -29,20 +29,18 @@ func TestReturnATwoWordName(t *testing.T) {
 	)
 }
 
-func ExampleReturnATwoWordName_withAThreeWordName() {
+func ExampleReturnATwoWordName() {
 	n := ReturnATwoWordName("Gabriel Toshio Omiya")
-	fmt.Println(n)
-	// Output: "Gabriel Toshio"
-}
+	fmt.Println("With three words:", n)
 
-func ExampleReturnATwoWordName_withATwoWordName() {
-	n := ReturnATwoWordName("Gabriel Toshio")
-	fmt.Println(n)
-	// Output: "Gabriel Toshio"
-}
+	n = ReturnATwoWordName("Gabriel Toshio")
+	fmt.Println("With two words:", n)
 
-func ExampleReturnATwoWordName_withAOneWordName() {
-	n := ReturnATwoWordName("Gabriel")
-	fmt.Println(n)
-	// Output: "Gabriel"
+	n = ReturnATwoWordName("Gabriel")
+	fmt.Println("With one word:", n)
+
+	// Output:
+	// With three words: Gabriel Toshio
+	// With two words: Gabriel Toshio
+	// With one word: Gabriel
 }

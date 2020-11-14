@@ -1,6 +1,7 @@
 package gspread
 
 import (
+	"fmt"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -63,6 +64,20 @@ func TestStripIfNecessary(t *testing.T) {
 		"Foo",
 		`The result of the string "  Foo  " in the stripIfNecessary function should be "Foo"`,
 	)
+}
+
+func ExampleStripIfNecessary() {
+	fooString := "Foo"
+	stripIfNecessary(&fooString)
+	fmt.Println(fooString)
+
+	fooString = "  Foo  "
+	stripIfNecessary(&fooString)
+	fmt.Println(fooString)
+
+	// Output:
+	// Foo
+	// Foo
 }
 
 func TestGetCredentialsDataReturn(t *testing.T) {

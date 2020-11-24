@@ -29,7 +29,7 @@ import (
 	"strings"
 	"time"
 
-	"../gspread"
+	"github.com/luisfelipesdn12/Alerta-de-Campeonatos-WCA/gspread"
 	"gopkg.in/gomail.v2"
 )
 
@@ -39,12 +39,16 @@ var englishTemplate, portugueseTemplate string
 func init() {
 	HTMLEnglishBytes, err := ioutil.ReadFile("./email/template/email-en.html")
 	if err != nil {
-		log.Fatal(err)
+		if HTMLEnglishBytes, err = ioutil.ReadFile("./template/email-en.html"); err != nil {
+			log.Fatal(err)
+		}
 	}
 
 	HTMLPortugueseBytes, err := ioutil.ReadFile("./email/template/email-pt.html")
 	if err != nil {
-		log.Fatal(err)
+		if HTMLPortugueseBytes, err = ioutil.ReadFile("./template/email-pt.html"); err != nil {
+			log.Fatal(err)
+		}
 	}
 
 	englishTemplate = string(HTMLEnglishBytes)

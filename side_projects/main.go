@@ -6,8 +6,8 @@ import (
 	"log"
 	"os/exec"
 
-	"./notification"
-	"./sendmelog"
+	"github.com/luisfelipesdn12/Alerta-de-Campeonatos-WCA/side_projects/notification"
+	"github.com/luisfelipesdn12/Alerta-de-Campeonatos-WCA/side_projects/sendmelog"
 )
 
 // SecretJSONStruct stores useful and confidential variables as

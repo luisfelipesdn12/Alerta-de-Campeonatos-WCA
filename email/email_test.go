@@ -4,7 +4,9 @@ import (
 	"fmt"
 	"testing"
 
+	"github.com/luisfelipesdn12/Alerta-de-Campeonatos-WCA/gspread"
 	"github.com/stretchr/testify/assert"
+	"gopkg.in/Iwark/spreadsheet.v2"
 )
 
 func TestReturnATwoWordName(t *testing.T) {
@@ -43,4 +45,20 @@ func ExampleReturnATwoWordName() {
 	// With three words: Gabriel Toshio
 	// With two words: Gabriel Toshio
 	// With one word: Gabriel
+}
+
+func TestSendEmail(t *testing.T) {
+	mockRecipient := gspread.RecipientStruct{
+		Name:     spreadsheet.Cell{Value: "Lorem Ipsum"},
+		Email:    spreadsheet.Cell{Value: "example@mail.com"},
+		City:     spreadsheet.Cell{Value: "Washington DC"},
+		Language: spreadsheet.Cell{Value: "English"},
+	}
+
+	mockCredentials := gspread.CredentialStruct{
+		Email:    "mock",
+		Password: "mock",
+	}
+
+	_ = SendEmail(mockRecipient, mockCredentials)
 }

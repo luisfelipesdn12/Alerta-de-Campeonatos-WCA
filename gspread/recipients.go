@@ -115,10 +115,10 @@ func GetRecipientsData(spreadData spreadsheet.Spreadsheet) ([]RecipientStruct, e
 		// program sends an email or verify if a city
 		// already exists in `main.cityUpcomingCompetitionsCache`.
 		// So the lines below strip this strings using
-		// the function `stripIfNecessary`.
-		stripIfNecessary(&recipientData.Name.Value)
-		stripIfNecessary(&recipientData.Email.Value)
-		stripIfNecessary(&recipientData.City.Value)
+		// the function `StripIfNecessary`.
+		StripIfNecessary(&recipientData.Name.Value)
+		StripIfNecessary(&recipientData.Email.Value)
+		StripIfNecessary(&recipientData.City.Value)
 
 		// Add the `RecipientStruct` in the slice.
 		recipients = append(recipients, recipientData)
@@ -160,9 +160,9 @@ func (recipient RecipientStruct) UpdateUpcomingCompetitions() error {
 	return nil
 }
 
-// stripIfNecessary delete all spaces in the prefix
+// StripIfNecessary delete all spaces in the prefix
 // and suffix string, given it pointer.
-func stripIfNecessary(s *string) {
+func StripIfNecessary(s *string) {
 	if strings.HasPrefix(*s, "") || strings.HasSuffix(*s, " ") {
 		*s = strings.TrimSpace(*s)
 	}

@@ -48,7 +48,7 @@ func TestStripIfNecessary(t *testing.T) {
 	assert := assert.New(t)
 
 	fooString := "Foo"
-	stripIfNecessary(&fooString)
+	StripIfNecessary(&fooString)
 
 	assert.Equal(
 		fooString,
@@ -57,7 +57,7 @@ func TestStripIfNecessary(t *testing.T) {
 	)
 
 	fooString = "  Foo  "
-	stripIfNecessary(&fooString)
+	StripIfNecessary(&fooString)
 
 	assert.Equal(
 		fooString,
@@ -68,11 +68,11 @@ func TestStripIfNecessary(t *testing.T) {
 
 func ExampleStripIfNecessary() {
 	fooString := "Foo"
-	stripIfNecessary(&fooString)
+	StripIfNecessary(&fooString)
 	fmt.Println(fooString)
 
 	fooString = "  Foo  "
-	stripIfNecessary(&fooString)
+	StripIfNecessary(&fooString)
 	fmt.Println(fooString)
 
 	// Output:

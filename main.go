@@ -65,7 +65,6 @@ func init() {
 }
 
 func main() {
-
 	// Close the log file at the end of the block
 	defer logFile.Close()
 

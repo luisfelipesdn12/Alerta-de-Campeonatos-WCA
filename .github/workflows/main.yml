@@ -70,4 +70,4 @@ jobs:
         run: go get
     
       - name: Run code
-        run: go run
+        run: go run main.go

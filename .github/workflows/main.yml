@@ -30,7 +30,7 @@ jobs:
         uses: actions/checkout@v2
   
       - name: Test code
-        run: go test ./...
+        run: go test ./email/... ./gspread/... ./wca/...
   
   build:
     # The type of runner that the job will run on
@@ -42,7 +42,7 @@ jobs:
         run: go get -d ./...
 
       - name: Build project
-        run: go build -o main .
+        run: go build .
         
   run:
     # The type of runner that the job will run on
@@ -51,4 +51,4 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       - name: Run code
-        run: main
+        run: Alerta-de-Campeonatos-WCA

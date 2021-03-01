@@ -42,7 +42,7 @@ jobs:
         run: go get -d ./...
 
       - name: Build project
-        run: go build .
+        run: go build
         
   run:
     # The type of runner that the job will run on

@@ -68,9 +68,6 @@ jobs:
     
       - name: Install dependencies
         run: go get
-
-      - name: Build project
-        run: go build
     
       - name: Run code
-        run: Alerta-de-Campeonatos-WCA
+        run: go run

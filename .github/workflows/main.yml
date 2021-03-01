@@ -38,6 +38,9 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
+      - name: Debug commands
+        run: tree && cd .. && tree && cd Alerta-de-Campeonatos-WCA
+    
       - name: Install dependencies
         run: go get
 

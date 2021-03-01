@@ -39,7 +39,7 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       - name: Install dependencies
-        run: go install
+        run: go get
 
       - name: Build project
         run: go build

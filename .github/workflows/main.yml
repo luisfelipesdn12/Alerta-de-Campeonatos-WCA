@@ -76,7 +76,10 @@ jobs:
         run: go run main.go
         continue-on-error: true
         
-      - name: Display logging
+      - name: Display logging on failure
+        run: cat main.log && exit 1
+        if: failure()
+        
+      - name: Display logging on sucess
         run: cat main.log
-        if: failure(exit 1)
-        continue-on-error: true
+        if: success()

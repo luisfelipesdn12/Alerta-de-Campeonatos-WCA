@@ -73,11 +73,3 @@ jobs:
         run: go run main.go
         env:
           CLIENT_SECRET_JSON_GIST_URL: ${{ secrets.CLIENT_SECRET_JSON_GIST_URL }}
-        
-      - name: Display logging on failure
-        run: cat main.log && exit 1
-        if: failure()
-        
-      - name: Display logging on sucess
-        run: cat main.log
-        if: success()

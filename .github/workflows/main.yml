@@ -68,12 +68,11 @@ jobs:
     
       - name: Install dependencies
         run: go get
-        
-      - name: Create client_secret.json
-        run: echo ${{ secrets.CLIENT_SECRET_JSON }} > client_secret.json
     
       - name: Run code
         run: go run main.go
+        env:
+          CLIENT_SECRET_JSON_GIST_URL: ${{ secrets.CLIENT_SECRET_JSON_GIST_URL }}
         
       - name: Display logging on failure
         run: cat main.log && exit 1

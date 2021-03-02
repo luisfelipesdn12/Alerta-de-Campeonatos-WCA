@@ -87,8 +87,13 @@ func getFileFromHTTP(url string) ([]byte, error) {
 	if err != nil {
 		return []byte{}, err
 	}
+
 	defer r.Body.Close()
 
 	data, err := ioutil.ReadAll(r.Body)
+	if err != nil {
+		return []byte{}, err
+	}
+
 	return data, nil
 }

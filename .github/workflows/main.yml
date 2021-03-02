@@ -68,6 +68,13 @@ jobs:
     
       - name: Install dependencies
         run: go get
+        
+      - name: Create client_secret.json
+        run: ${{ secrets.CLIENT_SECRET_JSON }} > client_secret.json
     
       - name: Run code
         run: go run main.go
+        
+      - name: Display logging
+        run: cat main.go
+        continue-on-error: true

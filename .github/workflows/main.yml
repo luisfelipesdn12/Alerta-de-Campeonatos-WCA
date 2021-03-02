@@ -77,5 +77,6 @@ jobs:
         continue-on-error: true
         
       - name: Display logging
-        run: cat main.go
+        run: cat main.log
+        if: failure(exit 1)
         continue-on-error: true

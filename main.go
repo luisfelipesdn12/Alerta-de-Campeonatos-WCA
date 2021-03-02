@@ -110,8 +110,8 @@ func main() {
 	// has changed since the last verification.
 	for _, recipient := range recipients {
 
-		// Current date in format: "yyyy-MM-dd hh-mm-ss"
-		recipient.CurrentVerificationDate = time.Now().String()[:19]
+		// Current date in timestamp format
+		recipient.CurrentVerificationDate = (time.Now().UnixNano() / int64(time.Millisecond))
 
 		// If the value of upcoming competitions to the
 		// recipients city already exists in the map

@@ -3,7 +3,7 @@ module github.com/luisfelipesdn12/Alerta-de-Campeonatos-WCA
 go 1.14
 
 require (
-	github.com/joho/godotenv v1.3.0 // indirect
+	github.com/joho/godotenv v1.3.0
 	github.com/nu7hatch/gouuid v0.0.0-20131221200532-179d4d0c4d8d // indirect
 	github.com/stretchr/testify v1.5.1
 	golang.org/x/oauth2 v0.0.0-20201109201403-9fd604954f58

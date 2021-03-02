@@ -19,6 +19,7 @@
 package gspread
 
 import (
+	"fmt"
 	"log"
 	"strconv"
 	"strings"
@@ -56,10 +57,10 @@ type RecipientStruct struct {
 	// checked in this exactly runtime. Can be a zero value
 	// if it was not checked yet.
 	CurrentUpcomingCompetitions int
-	// The date/time information in string of the
+	// The epoch timestamp information of the
 	// verification in this exactly runtime. Can be
 	// a zero value if it was not checked yet.
-	CurrentVerificationDate string
+	CurrentVerificationDate int64
 }
 
 // GetRecipientsData fetch the data stored in the
@@ -147,7 +148,7 @@ func (recipient RecipientStruct) UpdateUpcomingCompetitions() error {
 	recipient.Sheet.Update(
 		int(recipient.LastVerification.Row),
 		int(recipient.LastVerification.Column),
-		string(recipient.CurrentVerificationDate),
+		fmt.Sprintf("%v", recipient.CurrentVerificationDate),
 	)
 
 	// Synchronize the updates with the original

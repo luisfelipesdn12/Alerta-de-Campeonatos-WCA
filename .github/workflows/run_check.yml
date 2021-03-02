@@ -1,4 +1,4 @@
-name: Run the checking for new competitions
+name: Run - checking for new competitions
 
 on:
   schedule:

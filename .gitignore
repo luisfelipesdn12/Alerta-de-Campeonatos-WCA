@@ -1,4 +1,5 @@
 client_secret.json
+.env
 resume.json
 .vscode/
 *.exe

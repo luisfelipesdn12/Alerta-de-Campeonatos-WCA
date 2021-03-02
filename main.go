@@ -25,6 +25,7 @@ import (
 	"strconv"
 	"time"
 
+	"github.com/joho/godotenv"
 	"github.com/luisfelipesdn12/Alerta-de-Campeonatos-WCA/email"
 	"github.com/luisfelipesdn12/Alerta-de-Campeonatos-WCA/gspread"
 	"github.com/luisfelipesdn12/Alerta-de-Campeonatos-WCA/resume"
@@ -61,6 +62,11 @@ func init() {
 		checkError(err)
 
 		log.SetOutput(logFile)
+	}
+
+	err := godotenv.Load()
+	if err != nil {
+		log.Println("Was not founded an .env file")
 	}
 }
 

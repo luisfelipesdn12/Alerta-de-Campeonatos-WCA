@@ -25,6 +25,9 @@ import (
 	"context"
 	"io/ioutil"
 	"log"
+	"net/http"
+	"os"
+	"time"
 
 	"golang.org/x/oauth2/google"
 	"gopkg.in/Iwark/spreadsheet.v2"
@@ -51,7 +54,7 @@ func GetSpreadData() (spreadsheet.Spreadsheet, error) {
 	log.Println("Connecting with Google SpreadSheets API")
 
 	log.Println("> Reading client_secret.json")
-	data, err := ioutil.ReadFile("client_secret.json")
+	data, err := getFileFromHTTP(os.Getenv("CLIENT_SECRET_JSON_GIST_URL"))
 	if err != nil {
 		return spreadData, err
 	}
@@ -75,4 +78,17 @@ func GetSpreadData() (spreadsheet.Spreadsheet, error) {
 	}
 
 	return spreadsheet, nil
+}
+
+func getFileFromHTTP(url string) ([]byte, error) {
+	client := &http.Client{Timeout: 10 * time.Second}
+
+	r, err := client.Get(url)
+	if err != nil {
+		return []byte{}, err
+	}
+	defer r.Body.Close()
+
+	data, err := ioutil.ReadAll(r.Body)
+	return data, nil
 }

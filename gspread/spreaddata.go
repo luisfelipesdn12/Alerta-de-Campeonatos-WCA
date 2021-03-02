@@ -22,8 +22,11 @@
 package gspread
 
 import (
+	"context"
+	"io/ioutil"
 	"log"
 
+	"golang.org/x/oauth2/google"
 	"gopkg.in/Iwark/spreadsheet.v2"
 )
 
@@ -46,10 +49,21 @@ func GetSpreadData() (spreadsheet.Spreadsheet, error) {
 	// root. If an error happen, the function returns
 	// a empty `spreadsheet.Spreadsheet` and the error.
 	log.Println("Connecting with Google SpreadSheets API")
-	service, err := spreadsheet.NewService()
+
+	log.Println("> Reading client_secret.json")
+	data, err := ioutil.ReadFile("client_secret.json")
 	if err != nil {
 		return spreadData, err
 	}
+
+	log.Println("> Getting JWT configuration from JSON")
+	conf, err := google.JWTConfigFromJSON(data, spreadsheet.Scope)
+	if err != nil {
+		return spreadData, err
+	}
+
+	client := conf.Client(context.TODO())
+	service := spreadsheet.NewServiceWithClient(client)
 
 	// Fetch the spreadsheet with the `spreadsheetID` value.
 	// If an error happen, the function returns a empty

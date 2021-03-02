@@ -74,6 +74,7 @@ jobs:
     
       - name: Run code
         run: go run main.go
+        continue-on-error: true
         
       - name: Display logging
         run: cat main.go

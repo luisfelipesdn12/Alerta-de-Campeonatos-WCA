@@ -1,13 +1,14 @@
-name: Run the checking for new competitions
+name: Run - checking for new competitions
 
 on:
+  push:
+    branches: [master]
   schedule:
     - cron: "*/60 * * * *"
 
 jobs:
   run:
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main'
 
     steps:
       - name: Install Go

@@ -70,7 +70,7 @@ jobs:
         run: go get
         
       - name: Create client_secret.json
-        run: ${{ secrets.CLIENT_SECRET_JSON }} > client_secret.json
+        run: echo ${{ secrets.CLIENT_SECRET_JSON }} > client_secret.json
     
       - name: Run code
         run: go run main.go

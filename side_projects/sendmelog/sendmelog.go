@@ -6,17 +6,28 @@ import (
 	"fmt"
 	"io/ioutil"
 	"log"
+	"os"
+	"strconv"
 	"strings"
 	"time"
 
 	tb "gopkg.in/tucnak/telebot.v2"
 )
 
-const notifyWhenDone = false
-const notifyWhenNotDone = true
-
 // Send actually send to the Telegram receiver the main.log file.
-func Send(TelegramBotToken string, TelegramRecipientID int, GitHubMainLogGistURL, GitHubMainLogGistLastCommitHash string) {
+func Send(TelegramBotToken string, TelegramRecipientID int, GitHubMainLogGistID string) {
+	notifyWhenDone, err := strconv.ParseBool(os.Getenv("NOTIFY_WHEN_DONE"))
+	if err != nil {
+		log.Println("Error parsing NOTIFY_WHEN_DONE, considering false:", err)
+		notifyWhenDone = false
+	}
+
+	notifyWhenNotDone, err := strconv.ParseBool(os.Getenv("NOTIFY_WHEN_NOT_DONE"))
+	if err != nil {
+		log.Println("Error parsing NOTIFY_WHEN_NOT_DONE, considering false:", err)
+		notifyWhenNotDone = false
+	}
+
 	logFile, err := ioutil.ReadFile("../main.log")
 	if err != nil {
 		log.Fatalln("Error while opening main.log: " + err.Error())
@@ -39,8 +50,8 @@ func Send(TelegramBotToken string, TelegramRecipientID int, GitHubMainLogGistURL
 		if notifyWhenDone {
 			bot.Send(recipient,
 				fmt.Sprintf(
-					"The execution of WCA-Alert WAS done\n\n[See more here!](%v)",
-					(GitHubMainLogGistURL+"/"+GitHubMainLogGistLastCommitHash),
+					"🟢 The execution of WCA-Alert WAS done\n\n[See more here!](%v)",
+					fmt.Sprintf("https://gist.github.com/luisfelipesdn12/%v", GitHubMainLogGistID),
 				),
 				&tb.SendOptions{
 					ParseMode: "Markdown",
@@ -53,8 +64,8 @@ func Send(TelegramBotToken string, TelegramRecipientID int, GitHubMainLogGistURL
 		if notifyWhenNotDone {
 			bot.Send(recipient,
 				fmt.Sprintf(
-					"The execution of WCA-Alert WAS NOT done\n\n[See more here!](%v)",
-					(GitHubMainLogGistURL+"/"+GitHubMainLogGistLastCommitHash),
+					"🔴 The execution of WCA-Alert WAS NOT done\n\n[See more here!](%v)",
+					fmt.Sprintf("https://gist.github.com/luisfelipesdn12/%v", GitHubMainLogGistID),
 				),
 				&tb.SendOptions{
 					ParseMode: "Markdown",

@@ -8,37 +8,37 @@ on:
 
 jobs:
     run:
-    runs-on: ubuntu-latest
+        runs-on: ubuntu-latest
 
-    steps:
-        - name: Install Go
-          uses: actions/setup-go@v2
-          with:
-            go-version: 1.15.x
+        steps:
+            - name: Install Go
+              uses: actions/setup-go@v2
+              with:
+                  go-version: 1.15.x
 
-        - name: Checkout code
-          uses: actions/checkout@v2
+            - name: Checkout code
+              uses: actions/checkout@v2
 
-        - name: Install dependencies
-          run: go get
+            - name: Install dependencies
+              run: go get
 
-        - name: Test code
-          run: go test ./email/... ./gspread/... ./wca/...
+            - name: Test code
+              run: go test ./email/... ./gspread/... ./wca/...
 
-        - name: Run code
-          run: go run main.go
-          if: success()
-          env:
-            CLIENT_SECRET_JSON_GIST_URL: ${{ secrets.CLIENT_SECRET_JSON_GIST_URL }}
+            - name: Run code
+              run: go run main.go
+              if: success()
+              env:
+                  CLIENT_SECRET_JSON_GIST_URL: ${{ secrets.CLIENT_SECRET_JSON_GIST_URL }}
 
-        - name: Run side_projects
-          run: cd side_projects && go run main.go
-          continue-on-error: true
-          env:
-            TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-            TELEGRAM_RECIPIENT_ID: ${{ secrets.TELEGRAM_RECIPIENT_ID }}
-            GH_MAIN_LOG_GIST_ID: ${{ secrets.GH_MAIN_LOG_GIST_ID }}
-            GH_RESUME_GIST_ID: ${{ secrets.GH_RESUME_GIST_ID }}
-            GH_TOKEN: ${{ secrets.GH_TOKEN }}
-            NOTIFY_WHEN_DONE: ${{ secrets.NOTIFY_WHEN_DONE }}
-            NOTIFY_WHEN_NOT_DONE: ${{ secrets.NOTIFY_WHEN_NOT_DONE }}
+            - name: Run side_projects
+              run: cd side_projects && go run main.go
+              continue-on-error: true
+              env:
+                  TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+                  TELEGRAM_RECIPIENT_ID: ${{ secrets.TELEGRAM_RECIPIENT_ID }}
+                  GH_MAIN_LOG_GIST_ID: ${{ secrets.GH_MAIN_LOG_GIST_ID }}
+                  GH_RESUME_GIST_ID: ${{ secrets.GH_RESUME_GIST_ID }}
+                  GH_TOKEN: ${{ secrets.GH_TOKEN }}
+                  NOTIFY_WHEN_DONE: ${{ secrets.NOTIFY_WHEN_DONE }}
+                  NOTIFY_WHEN_NOT_DONE: ${{ secrets.NOTIFY_WHEN_NOT_DONE }}

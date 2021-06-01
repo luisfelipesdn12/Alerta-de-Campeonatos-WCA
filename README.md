@@ -29,7 +29,7 @@ To solve this issue, I had the idea of making a script that would check the site
 Subscribe, inserting your name, email, language and the city you want to be notified by filling the form bellow:
 
 
-[![Subscribe badge](https://img.shields.io/badge/subscribe%20me-I%20want%20to%20be%20notified-blue?style=for-the-badge&logo)](https://forms.gle/K6vW3YVAYp4d6nb97)
+[![**Subscribscription Form**](https://img.shields.io/badge/subscribe%20me-I%20want%20to%20be%20notified-blue?style=for-the-badge&logo)](https://forms.gle/K6vW3YVAYp4d6nb97)
 
 ## Execution:
 To execute this project, I've initially used Python with the libraries `requests` and `BeautifulSoup` for web scrapping in the site itself and `smtplib` for sending emails. 

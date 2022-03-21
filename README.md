@@ -14,7 +14,7 @@ A script which send an e-mail when there's a new WCA competition. Integrates the
 ## Ideia:
 >"The World Cube Association governs competitions for mechanical puzzles that are operated by twisting groups of pieces, commonly known as 'twisty puzzles'. The most famous of these puzzles is the Rubik's Cube, invented by professor Rubik from Hungary. A selection of these puzzles are chosen as official events of the WCA.
 As the WCA has evolved over the past decade, over 100,000 people have competed in our competitions."
->- Source: "[Who we are](https://www.worldcubeassociation.org/about)"  access in 2020 August, 08.
+>- Source: "[Who we are](https://www.worldcubeassociation.org/about)" access in 2020 August, 08.
 
 Me and my friends have the *speedcubing* as a hobbie, simplified: solve rubik's cube and other puzzles in the lowest time as possible.
 There's official competitions all over the world, realized by the World Cube Association (WCA), as above-mentioned.
